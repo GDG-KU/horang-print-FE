@@ -3,7 +3,8 @@ part of 'main.dart';
 class Service {
   static Future<void> initFlutter() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    await SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeLeft]);
   }
 
   static Future<void> initEnv() async {

@@ -18,9 +18,9 @@ class HomePage extends ConsumerWidget {
             padding: const EdgeInsets.all(16.0),
             child: ShadButton(
               onPressed: () {
-                context.go(Routes.login);
+                context.go(Routes.styleSelection);
               },
-              child: const Text('Test Login Page'),
+              child: const Text('Test Style Selection'),
             ),
           ),
           Expanded(

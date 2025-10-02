@@ -20,14 +20,10 @@ class StartPage extends ConsumerWidget {
           fit: StackFit.expand,
           children: [
             Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    context.colorScheme.primary.withOpacity(0.8),
-                    context.colorScheme.primaryForeground.withOpacity(0.3),
-                  ],
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/background.png'),
+                  fit: BoxFit.cover,
                 ),
               ),
               child: BackdropFilter(

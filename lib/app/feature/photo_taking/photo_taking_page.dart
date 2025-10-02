@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,25 +36,52 @@ class _PhotoTakingPageState extends ConsumerState<PhotoTakingPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.grey[900]!,
-                  Colors.grey[800]!,
-                ],
+          // Camera preview or loading state
+          if (state.cameraController != null &&
+              state.cameraController!.value.isInitialized)
+            SizedBox.expand(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: state.cameraController!.value.previewSize!.height,
+                  height: state.cameraController!.value.previewSize!.width,
+                  child: CameraPreview(state.cameraController!),
+                ),
+              ),
+            )
+          else if (state.isInitializing)
+            Container(
+              color: Colors.black,
+              child: const Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              ),
+            )
+          else if (state.errorMessage != null)
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Text(
+                    state.errorMessage!,
+                    style: const TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            )
+          else
+            Container(
+              color: Colors.black,
+              child: const Center(
+                child: Icon(
+                  Icons.camera_alt,
+                  size: 100,
+                  color: Colors.white30,
+                ),
               ),
             ),
-            child: const Center(
-              child: Icon(
-                Icons.camera_alt,
-                size: 100,
-                color: Colors.white30,
-              ),
-            ),
-          ),
+          // UI Overlay
           SafeArea(
             child: Column(
               children: [

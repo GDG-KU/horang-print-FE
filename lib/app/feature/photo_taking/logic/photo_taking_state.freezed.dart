@@ -20,6 +20,9 @@ mixin _$PhotoTakingState {
   int get countdown => throw _privateConstructorUsedError;
   bool get isCameraReady => throw _privateConstructorUsedError;
   bool get isCapturing => throw _privateConstructorUsedError;
+  bool get isInitializing => throw _privateConstructorUsedError;
+  CameraController? get cameraController => throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
   Uint8List? get capturedImage => throw _privateConstructorUsedError;
 
   /// Create a copy of PhotoTakingState
@@ -40,6 +43,9 @@ abstract class $PhotoTakingStateCopyWith<$Res> {
       int countdown,
       bool isCameraReady,
       bool isCapturing,
+      bool isInitializing,
+      CameraController? cameraController,
+      String? errorMessage,
       Uint8List? capturedImage});
 }
 
@@ -62,6 +68,9 @@ class _$PhotoTakingStateCopyWithImpl<$Res, $Val extends PhotoTakingState>
     Object? countdown = null,
     Object? isCameraReady = null,
     Object? isCapturing = null,
+    Object? isInitializing = null,
+    Object? cameraController = freezed,
+    Object? errorMessage = freezed,
     Object? capturedImage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -81,6 +90,18 @@ class _$PhotoTakingStateCopyWithImpl<$Res, $Val extends PhotoTakingState>
           ? _value.isCapturing
           : isCapturing // ignore: cast_nullable_to_non_nullable
               as bool,
+      isInitializing: null == isInitializing
+          ? _value.isInitializing
+          : isInitializing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      cameraController: freezed == cameraController
+          ? _value.cameraController
+          : cameraController // ignore: cast_nullable_to_non_nullable
+              as CameraController?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       capturedImage: freezed == capturedImage
           ? _value.capturedImage
           : capturedImage // ignore: cast_nullable_to_non_nullable
@@ -102,6 +123,9 @@ abstract class _$$PhotoTakingStateImplCopyWith<$Res>
       int countdown,
       bool isCameraReady,
       bool isCapturing,
+      bool isInitializing,
+      CameraController? cameraController,
+      String? errorMessage,
       Uint8List? capturedImage});
 }
 
@@ -122,6 +146,9 @@ class __$$PhotoTakingStateImplCopyWithImpl<$Res>
     Object? countdown = null,
     Object? isCameraReady = null,
     Object? isCapturing = null,
+    Object? isInitializing = null,
+    Object? cameraController = freezed,
+    Object? errorMessage = freezed,
     Object? capturedImage = freezed,
   }) {
     return _then(_$PhotoTakingStateImpl(
@@ -141,6 +168,18 @@ class __$$PhotoTakingStateImplCopyWithImpl<$Res>
           ? _value.isCapturing
           : isCapturing // ignore: cast_nullable_to_non_nullable
               as bool,
+      isInitializing: null == isInitializing
+          ? _value.isInitializing
+          : isInitializing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      cameraController: freezed == cameraController
+          ? _value.cameraController
+          : cameraController // ignore: cast_nullable_to_non_nullable
+              as CameraController?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       capturedImage: freezed == capturedImage
           ? _value.capturedImage
           : capturedImage // ignore: cast_nullable_to_non_nullable
@@ -157,6 +196,9 @@ class _$PhotoTakingStateImpl implements _PhotoTakingState {
       this.countdown = 3,
       this.isCameraReady = false,
       this.isCapturing = false,
+      this.isInitializing = false,
+      this.cameraController,
+      this.errorMessage,
       this.capturedImage});
 
   @override
@@ -172,11 +214,18 @@ class _$PhotoTakingStateImpl implements _PhotoTakingState {
   @JsonKey()
   final bool isCapturing;
   @override
+  @JsonKey()
+  final bool isInitializing;
+  @override
+  final CameraController? cameraController;
+  @override
+  final String? errorMessage;
+  @override
   final Uint8List? capturedImage;
 
   @override
   String toString() {
-    return 'PhotoTakingState(isCountingDown: $isCountingDown, countdown: $countdown, isCameraReady: $isCameraReady, isCapturing: $isCapturing, capturedImage: $capturedImage)';
+    return 'PhotoTakingState(isCountingDown: $isCountingDown, countdown: $countdown, isCameraReady: $isCameraReady, isCapturing: $isCapturing, isInitializing: $isInitializing, cameraController: $cameraController, errorMessage: $errorMessage, capturedImage: $capturedImage)';
   }
 
   @override
@@ -192,6 +241,12 @@ class _$PhotoTakingStateImpl implements _PhotoTakingState {
                 other.isCameraReady == isCameraReady) &&
             (identical(other.isCapturing, isCapturing) ||
                 other.isCapturing == isCapturing) &&
+            (identical(other.isInitializing, isInitializing) ||
+                other.isInitializing == isInitializing) &&
+            (identical(other.cameraController, cameraController) ||
+                other.cameraController == cameraController) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
             const DeepCollectionEquality()
                 .equals(other.capturedImage, capturedImage));
   }
@@ -203,6 +258,9 @@ class _$PhotoTakingStateImpl implements _PhotoTakingState {
       countdown,
       isCameraReady,
       isCapturing,
+      isInitializing,
+      cameraController,
+      errorMessage,
       const DeepCollectionEquality().hash(capturedImage));
 
   /// Create a copy of PhotoTakingState
@@ -221,6 +279,9 @@ abstract class _PhotoTakingState implements PhotoTakingState {
       final int countdown,
       final bool isCameraReady,
       final bool isCapturing,
+      final bool isInitializing,
+      final CameraController? cameraController,
+      final String? errorMessage,
       final Uint8List? capturedImage}) = _$PhotoTakingStateImpl;
 
   @override
@@ -231,6 +292,12 @@ abstract class _PhotoTakingState implements PhotoTakingState {
   bool get isCameraReady;
   @override
   bool get isCapturing;
+  @override
+  bool get isInitializing;
+  @override
+  CameraController? get cameraController;
+  @override
+  String? get errorMessage;
   @override
   Uint8List? get capturedImage;
 

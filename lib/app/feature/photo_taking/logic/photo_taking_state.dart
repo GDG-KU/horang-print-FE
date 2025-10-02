@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:typed_data';
 
@@ -10,6 +11,9 @@ class PhotoTakingState with _$PhotoTakingState {
     @Default(3) int countdown,
     @Default(false) bool isCameraReady,
     @Default(false) bool isCapturing,
+    @Default(false) bool isInitializing,
+    CameraController? cameraController,
+    String? errorMessage,
     Uint8List? capturedImage,
   }) = _PhotoTakingState;
 }

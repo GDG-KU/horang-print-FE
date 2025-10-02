@@ -17,48 +17,35 @@ class PhotoConfirmPage extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text(
-                '사진 확인',
-                style: context.textTheme.h2.copyWith(
-                  color: Colors.white,
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.circular(16),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[800],
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: photoState.capturedImage != null
-                          ? Image.memory(
-                              photoState.capturedImage!,
-                              fit: BoxFit.cover,
-                            )
-                          : Container(
-                              color: Colors.grey[700],
-                              child: const Center(
-                                child: Icon(
-                                  Icons.broken_image,
-                                  size: 100,
-                                  color: Colors.white30,
-                                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: photoState.capturedImage != null
+                        ? Image.memory(
+                            photoState.capturedImage!,
+                            fit: BoxFit.cover,
+                          )
+                        : Container(
+                            color: Colors.grey[700],
+                            child: const Center(
+                              child: Icon(
+                                Icons.broken_image,
+                                size: 100,
+                                color: Colors.white30,
                               ),
                             ),
-                    ),
+                          ),
                   ),
                 ),
               ),
             ),
-            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Row(

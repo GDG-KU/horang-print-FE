@@ -16,7 +16,9 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
 
   PhotoTakingNotifier() : super(const PhotoTakingState());
 
-  Future<void> initCamera() async {
+  Future<void> initCamera({
+    required Size photoSize,
+  }) async {
     try {
       state = state.copyWith(isInitializing: true);
 
@@ -30,7 +32,7 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
 
       final controller = CameraController(
         frontCamera,
-        ResolutionPreset.high,
+        ResolutionPreset.veryHigh,
         enableAudio: false,
       );
 
@@ -87,34 +89,34 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
       final image = await controller.takePicture();
       final imageBytes = await image.readAsBytes();
 
-      // Decode image
-      final decodedImage = img.decodeImage(imageBytes);
-      if (decodedImage == null) {
-        throw Exception('Failed to decode image');
-      }
+      // // Decode image
+      // final decodedImage = img.decodeImage(imageBytes);
+      // if (decodedImage == null) {
+      //   throw Exception('Failed to decode image');
+      // }
 
-      // Crop to 1:1 aspect ratio (center crop)
-      final size = decodedImage.width < decodedImage.height
-          ? decodedImage.width
-          : decodedImage.height;
+      // // Crop to 1:1 aspect ratio (center crop)
+      // final size = decodedImage.width < decodedImage.height
+      //     ? decodedImage.width
+      //     : decodedImage.height;
 
-      final x = (decodedImage.width - size) ~/ 2;
-      final y = (decodedImage.height - size) ~/ 2;
+      // final x = (decodedImage.width - size) ~/ 2;
+      // final y = (decodedImage.height - size) ~/ 2;
 
-      final croppedImage = img.copyCrop(
-        decodedImage,
-        x: x,
-        y: y,
-        width: size,
-        height: size,
-      );
+      // final croppedImage = img.copyCrop(
+      //   decodedImage,
+      //   x: x,
+      //   y: y,
+      //   width: size,
+      //   height: size,
+      // );
 
-      // Encode back to bytes
-      final croppedBytes = img.encodeJpg(croppedImage);
+      // // Encode back to bytes
+      // final croppedBytes = img.encodeJpg(croppedImage);
 
       state = state.copyWith(
         isCapturing: false,
-        capturedImage: croppedBytes,
+        capturedImage: imageBytes,
       );
     } catch (e) {
       state = state.copyWith(

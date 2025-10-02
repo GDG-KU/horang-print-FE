@@ -27,6 +27,9 @@ dependencies:
   path: ^1.9.0
   image: ^4.3.0
 
+  flutter_sewoo_usb_printer:
+    path: ./packages/flutter_sewoo_usb_printer
+
 
 dev_dependencies:
   flutter_test:
@@ -41,4 +44,5 @@ flutter:
   assets:
     - assets/
     - assets/sample_images/
+    - assets/logo/
     - .env

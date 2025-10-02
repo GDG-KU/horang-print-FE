@@ -400,6 +400,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  flutter_sewoo_usb_printer:
+    dependency: "direct main"
+    description:
+      path: "packages/flutter_sewoo_usb_printer"
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter_shaders:
     dependency: transitive
     description:

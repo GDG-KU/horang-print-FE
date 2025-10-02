@@ -5,4 +5,7 @@ extension BuildContextX on BuildContext {
   ShadThemeData get shadTheme => ShadTheme.of(this);
   ShadColorScheme get colorScheme => shadTheme.colorScheme;
   ShadTextTheme get textTheme => shadTheme.textTheme;
+
+  double get width => MediaQuery.sizeOf(this).width;
+  double get height => MediaQuery.sizeOf(this).height;
 }

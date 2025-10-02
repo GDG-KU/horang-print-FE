@@ -19,7 +19,9 @@ class _PhotoTakingPageState extends ConsumerState<PhotoTakingPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(photoTakingProvider.notifier).initCamera();
+      ref
+          .read(photoTakingProvider.notifier)
+          .initCamera(photoSize: Size(context.height, context.height));
     });
   }
 
@@ -41,16 +43,14 @@ class _PhotoTakingPageState extends ConsumerState<PhotoTakingPage> {
           if (state.cameraController != null &&
               state.cameraController!.value.isInitialized)
             Center(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: ClipRect(
-                  child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: SizedBox(
-                      width: state.cameraController!.value.previewSize!.height,
-                      height: state.cameraController!.value.previewSize!.width,
-                      child: CameraPreview(state.cameraController!),
-                    ),
+              child: ClipRect(
+                child: AspectRatio(
+                  aspectRatio: state.cameraController!.value.aspectRatio,
+                  child: ValueListenableBuilder(
+                    valueListenable: state.cameraController!,
+                    builder: (context, controller, child) {
+                      return state.cameraController!.buildPreview();
+                    },
                   ),
                 ),
               ),

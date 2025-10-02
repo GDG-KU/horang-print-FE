@@ -34,18 +34,24 @@ class _PhotoTakingPageState extends ConsumerState<PhotoTakingPage> {
     });
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           // Camera preview or loading state
           if (state.cameraController != null &&
               state.cameraController!.value.isInitialized)
-            SizedBox.expand(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SizedBox(
-                  width: state.cameraController!.value.previewSize!.height,
-                  height: state.cameraController!.value.previewSize!.width,
-                  child: CameraPreview(state.cameraController!),
+            Center(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ClipRect(
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: state.cameraController!.value.previewSize!.height,
+                      height: state.cameraController!.value.previewSize!.width,
+                      child: CameraPreview(state.cameraController!),
+                    ),
+                  ),
                 ),
               ),
             )

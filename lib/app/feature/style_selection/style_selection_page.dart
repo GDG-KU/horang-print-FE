@@ -52,7 +52,7 @@ class StyleSelectionPage extends ConsumerWidget {
                               onTap: () {
                                 ref
                                     .read(styleSelectionProvider.notifier)
-                                    .selectStyle(style.id);
+                                    .toggleStyle(style.id);
                               },
                             ),
                           );

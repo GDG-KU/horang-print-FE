@@ -26,41 +26,39 @@ class PhotoConfirmPage extends ConsumerWidget {
                 ),
               ),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[800],
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: photoState.capturedImage != null
-                        ? Container(
-                            color: Colors.grey[700],
-                            child: const Center(
-                              child: Icon(
-                                Icons.image,
-                                size: 100,
-                                color: Colors.white30,
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Center(
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[800],
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: photoState.capturedImage != null
+                          ? Image.memory(
+                              photoState.capturedImage!,
+                              fit: BoxFit.cover,
+                            )
+                          : Container(
+                              color: Colors.grey[700],
+                              child: const Center(
+                                child: Icon(
+                                  Icons.broken_image,
+                                  size: 100,
+                                  color: Colors.white30,
+                                ),
                               ),
                             ),
-                          )
-                        : Container(
-                            color: Colors.grey[700],
-                            child: const Center(
-                              child: Icon(
-                                Icons.broken_image,
-                                size: 100,
-                                color: Colors.white30,
-                              ),
-                            ),
-                          ),
+                    ),
                   ),
                 ),
               ),
             ),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Row(

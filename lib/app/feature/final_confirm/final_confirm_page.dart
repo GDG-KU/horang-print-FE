@@ -65,19 +65,24 @@ class FinalConfirmPage extends ConsumerWidget {
                               )
                             : AspectRatio(
                                 aspectRatio: 1,
-                                child: Container(
-                                  color: ShadTheme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.auto_awesome,
-                                      size: 100,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
+                                child: state.transformedImage != null
+                                    ? Image.memory(
+                                        state.transformedImage!,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Container(
+                                        color: ShadTheme.of(context)
+                                            .colorScheme
+                                            .primary
+                                            .withOpacity(0.1),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.auto_awesome,
+                                            size: 100,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
                               ),
                       ),
                     ),

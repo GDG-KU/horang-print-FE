@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horang_print/app/feature/photo_taking/logic/photo_taking_state.dart';
+import 'package:image/image.dart' as img;
 
 final photoTakingProvider =
     StateNotifierProvider<PhotoTakingNotifier, PhotoTakingState>((ref) {
@@ -86,9 +87,34 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
       final image = await controller.takePicture();
       final imageBytes = await image.readAsBytes();
 
+      // Decode image
+      final decodedImage = img.decodeImage(imageBytes);
+      if (decodedImage == null) {
+        throw Exception('Failed to decode image');
+      }
+
+      // Crop to 1:1 aspect ratio (center crop)
+      final size = decodedImage.width < decodedImage.height
+          ? decodedImage.width
+          : decodedImage.height;
+
+      final x = (decodedImage.width - size) ~/ 2;
+      final y = (decodedImage.height - size) ~/ 2;
+
+      final croppedImage = img.copyCrop(
+        decodedImage,
+        x: x,
+        y: y,
+        width: size,
+        height: size,
+      );
+
+      // Encode back to bytes
+      final croppedBytes = img.encodeJpg(croppedImage);
+
       state = state.copyWith(
         isCapturing: false,
-        capturedImage: imageBytes,
+        capturedImage: croppedBytes,
       );
     } catch (e) {
       state = state.copyWith(

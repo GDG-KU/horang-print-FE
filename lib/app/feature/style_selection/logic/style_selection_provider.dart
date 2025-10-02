@@ -52,7 +52,15 @@ class StyleSelectionNotifier extends StateNotifier<StyleSelectionState> {
     );
   }
 
-  void selectStyle(String styleId) {
-    state = state.copyWith(selectedStyleId: styleId);
+  void toggleStyle(String styleId) {
+    state = state.copyWith(
+      selectedStyleId: state.selectedStyleId == styleId ? null : styleId,
+    );
+  }
+
+  void reset() {
+    state = state.copyWith(
+      selectedStyleId: null,
+    );
   }
 }

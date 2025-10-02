@@ -45,7 +45,7 @@ class PrintOutputPage extends ConsumerWidget {
                     children: [
                       SizedBox(
                         width: 200,
-                        height: 280,
+                        height: 200,
                         child: Card(
                           elevation: 8,
                           child: Center(
@@ -57,7 +57,6 @@ class PrintOutputPage extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 48),
                       QuantitySelector(),
                     ],
                   ),

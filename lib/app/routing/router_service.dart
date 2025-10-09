@@ -9,6 +9,7 @@ import 'package:horang_print/app/feature/photo_taking/photo_taking_page.dart';
 import 'package:horang_print/app/feature/print_output/print_output_page.dart';
 import 'package:horang_print/app/feature/start/start_page.dart';
 import 'package:horang_print/app/feature/style_selection/style_selection_page.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 extension GoRouterX on GoRouter {
   BuildContext? get context => configuration.navigatorKey.currentContext;
@@ -28,7 +29,7 @@ extension GoRouterX on GoRouter {
 }
 
 abstract class Routes {
-  static const String home = '/';
+  static const String start = '/';
   static const String styleSelection = '/style-selection';
   static const String photoTaking = '/photo-taking';
   static const String photoConfirmation = '/photo-confirmation';
@@ -45,12 +46,60 @@ class RouterService {
 
   String? queryParameter(String key) => router.currentUri.queryParameters[key];
 
+  void showToast(String message, {String? description}) {
+    final context = router.context;
+    if (context == null) return;
+    ShadToaster.of(context).show(
+      ShadToast(
+        title: Text(message),
+        description: description == null ? null : Text(description),
+        action: ShadButton.outline(
+          child: const Text('닫기'),
+          onPressed: () => ShadToaster.of(context).hide(),
+        ),
+      ),
+    );
+  }
+
+  Future<bool> showConfirmDialog({
+    required String title,
+    String? description,
+    String confirmText = '계속하기',
+    String cancelText = '취소',
+  }) async {
+    final context = router.context;
+    if (context == null) return false;
+    final res = await showShadDialog(
+      context: context,
+      builder: (context) => ShadDialog.alert(
+        title: Text(title),
+        description: description != null
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(description),
+              )
+            : null,
+        actions: [
+          ShadButton.outline(
+            child: Text(cancelText),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          ShadButton(
+            child: Text(confirmText),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
+    );
+    return res ?? false;
+  }
+
   void init() {
     router = GoRouter(
-      initialLocation: Routes.home,
+      initialLocation: Routes.start,
       routes: [
         GoRoute(
-          path: Routes.home,
+          path: Routes.start,
           pageBuilder: (context, state) {
             return buildPageWithDefaultTransition(
               context: context,

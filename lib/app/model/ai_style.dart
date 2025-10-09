@@ -6,10 +6,11 @@ part 'ai_style.g.dart';
 @freezed
 class AiStyle with _$AiStyle {
   const factory AiStyle({
-    required String id,
+    required int id,
+    required String code,
     required String name,
-    required String exampleImageUrl,
-    String? description,
+    required String description,
+    @Default(false) bool is_active,
   }) = _AiStyle;
 
   factory AiStyle.fromJson(Map<String, dynamic> json) =>

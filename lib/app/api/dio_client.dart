@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -15,6 +19,13 @@ class MyDio {
     dio.interceptors.add(LogInterceptor(responseBody: true));
   }
 
+  StreamTransformer<Uint8List, List<int>> unit8Transformer =
+      StreamTransformer.fromHandlers(
+    handleData: (data, sink) {
+      sink.add(List<int>.from(data));
+    },
+  );
+
   Future<Result<T>> _request<T>({
     required String path,
     required String method,
@@ -23,17 +34,24 @@ class MyDio {
     T Function(dynamic)? fromJson,
     void Function(int, int)? onSendProgress,
     void Function(int, int)? onReceiveProgress,
+    Options? options,
+    bool isEventStream = false,
   }) async {
     try {
       final response = await dio.request(
         path,
         data: data,
         queryParameters: queryParameters,
-        options: Options(method: method),
+        options: options ?? Options(method: method),
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-
+      if (isEventStream) {
+        return Result.success(response.data.stream
+            .transform(unit8Transformer)
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter()));
+      }
       if (fromJson != null) {
         return Result.success(fromJson(response.data));
       } else {
@@ -58,6 +76,23 @@ class MyDio {
       queryParameters: queryParameters,
       fromJson: fromJson,
       onReceiveProgress: onReceiveProgress,
+    );
+  }
+
+  Future<Result<T>> getEventStream<T>(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return _request<T>(
+      path: path,
+      method: 'GET',
+      queryParameters: queryParameters,
+      options: Options(
+        responseType: ResponseType.stream,
+        receiveTimeout: const Duration(minutes: 30),
+        method: 'GET',
+      ),
+      isEventStream: true,
     );
   }
 

@@ -17,8 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$StyleSelectionState {
   List<AiStyle> get styles => throw _privateConstructorUsedError;
-  String? get selectedStyleId => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isError => throw _privateConstructorUsedError;
+  int? get selectedStyleId => throw _privateConstructorUsedError;
 
   /// Create a copy of StyleSelectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,11 @@ abstract class $StyleSelectionStateCopyWith<$Res> {
           StyleSelectionState value, $Res Function(StyleSelectionState) then) =
       _$StyleSelectionStateCopyWithImpl<$Res, StyleSelectionState>;
   @useResult
-  $Res call({List<AiStyle> styles, String? selectedStyleId, bool isLoading});
+  $Res call(
+      {List<AiStyle> styles,
+      bool isLoading,
+      bool isError,
+      int? selectedStyleId});
 }
 
 /// @nodoc
@@ -52,22 +57,27 @@ class _$StyleSelectionStateCopyWithImpl<$Res, $Val extends StyleSelectionState>
   @override
   $Res call({
     Object? styles = null,
-    Object? selectedStyleId = freezed,
     Object? isLoading = null,
+    Object? isError = null,
+    Object? selectedStyleId = freezed,
   }) {
     return _then(_value.copyWith(
       styles: null == styles
           ? _value.styles
           : styles // ignore: cast_nullable_to_non_nullable
               as List<AiStyle>,
-      selectedStyleId: freezed == selectedStyleId
-          ? _value.selectedStyleId
-          : selectedStyleId // ignore: cast_nullable_to_non_nullable
-              as String?,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isError: null == isError
+          ? _value.isError
+          : isError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedStyleId: freezed == selectedStyleId
+          ? _value.selectedStyleId
+          : selectedStyleId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -80,7 +90,11 @@ abstract class _$$StyleSelectionStateImplCopyWith<$Res>
       __$$StyleSelectionStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AiStyle> styles, String? selectedStyleId, bool isLoading});
+  $Res call(
+      {List<AiStyle> styles,
+      bool isLoading,
+      bool isError,
+      int? selectedStyleId});
 }
 
 /// @nodoc
@@ -97,22 +111,27 @@ class __$$StyleSelectionStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? styles = null,
-    Object? selectedStyleId = freezed,
     Object? isLoading = null,
+    Object? isError = null,
+    Object? selectedStyleId = freezed,
   }) {
     return _then(_$StyleSelectionStateImpl(
       styles: null == styles
           ? _value._styles
           : styles // ignore: cast_nullable_to_non_nullable
               as List<AiStyle>,
-      selectedStyleId: freezed == selectedStyleId
-          ? _value.selectedStyleId
-          : selectedStyleId // ignore: cast_nullable_to_non_nullable
-              as String?,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isError: null == isError
+          ? _value.isError
+          : isError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedStyleId: freezed == selectedStyleId
+          ? _value.selectedStyleId
+          : selectedStyleId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -122,8 +141,9 @@ class __$$StyleSelectionStateImplCopyWithImpl<$Res>
 class _$StyleSelectionStateImpl implements _StyleSelectionState {
   const _$StyleSelectionStateImpl(
       {final List<AiStyle> styles = const [],
-      this.selectedStyleId,
-      this.isLoading = false})
+      this.isLoading = false,
+      this.isError = false,
+      this.selectedStyleId})
       : _styles = styles;
 
   final List<AiStyle> _styles;
@@ -136,14 +156,17 @@ class _$StyleSelectionStateImpl implements _StyleSelectionState {
   }
 
   @override
-  final String? selectedStyleId;
-  @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool isError;
+  @override
+  final int? selectedStyleId;
 
   @override
   String toString() {
-    return 'StyleSelectionState(styles: $styles, selectedStyleId: $selectedStyleId, isLoading: $isLoading)';
+    return 'StyleSelectionState(styles: $styles, isLoading: $isLoading, isError: $isError, selectedStyleId: $selectedStyleId)';
   }
 
   @override
@@ -152,15 +175,20 @@ class _$StyleSelectionStateImpl implements _StyleSelectionState {
         (other.runtimeType == runtimeType &&
             other is _$StyleSelectionStateImpl &&
             const DeepCollectionEquality().equals(other._styles, _styles) &&
-            (identical(other.selectedStyleId, selectedStyleId) ||
-                other.selectedStyleId == selectedStyleId) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.isError, isError) || other.isError == isError) &&
+            (identical(other.selectedStyleId, selectedStyleId) ||
+                other.selectedStyleId == selectedStyleId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_styles), selectedStyleId, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_styles),
+      isLoading,
+      isError,
+      selectedStyleId);
 
   /// Create a copy of StyleSelectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -175,15 +203,18 @@ class _$StyleSelectionStateImpl implements _StyleSelectionState {
 abstract class _StyleSelectionState implements StyleSelectionState {
   const factory _StyleSelectionState(
       {final List<AiStyle> styles,
-      final String? selectedStyleId,
-      final bool isLoading}) = _$StyleSelectionStateImpl;
+      final bool isLoading,
+      final bool isError,
+      final int? selectedStyleId}) = _$StyleSelectionStateImpl;
 
   @override
   List<AiStyle> get styles;
   @override
-  String? get selectedStyleId;
-  @override
   bool get isLoading;
+  @override
+  bool get isError;
+  @override
+  int? get selectedStyleId;
 
   /// Create a copy of StyleSelectionState
   /// with the given fields replaced by the non-null parameter values.

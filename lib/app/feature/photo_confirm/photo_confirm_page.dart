@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:horang_print/app/extension/build_context_x.dart';
+import 'package:horang_print/app/feature/final_confirm/logic/final_confirm_provider.dart';
 import 'package:horang_print/app/feature/photo_taking/logic/photo_taking_provider.dart';
+import 'package:horang_print/app/feature/style_selection/logic/style_selection_provider.dart';
+import 'package:horang_print/app/provider/session_provider.dart';
 import 'package:horang_print/app/routing/router_service.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -73,8 +76,31 @@ class PhotoConfirmPage extends ConsumerWidget {
                   const SizedBox(width: 16),
                   Expanded(
                     child: ShadButton(
-                      onPressed: () {
-                        context.go(Routes.finalConfirmation);
+                      onPressed: () async {
+                        final result = RouterService.I.showConfirmDialog(
+                          title: '이 사진으로 결정하시겠습니까?',
+                          description: '다음 단계로 넘어가면 사진을 다시 찍을 수 없습니다.',
+                        );
+
+                        result.then((isConfirmed) async {
+                          if (isConfirmed && photoState.capturedImage != null) {
+                            final sessionId = await ref
+                                .read(sessionProvider.notifier)
+                                .createNewSession(
+                                  ref
+                                      .read(styleSelectionProvider)
+                                      .selectedStyleId!,
+                                );
+                            if (sessionId.isEmpty) return;
+                            ref
+                                .read(finalConfirmProvider.notifier)
+                                .submitOriginalImage(
+                                  photoState.capturedImage!,
+                                  sessionId,
+                                );
+                            RouterService.I.router.go(Routes.finalConfirmation);
+                          }
+                        });
                       },
                       size: ShadButtonSize.lg,
                       child: Row(

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'print_output_state.freezed.dart';
@@ -9,5 +11,6 @@ class PrintOutputState with _$PrintOutputState {
     @Default(1) int minQuantity,
     @Default(8) int maxQuantity,
     @Default(false) bool isPrinting,
+    Uint8List? capturedImage,
   }) = _PrintOutputState;
 }

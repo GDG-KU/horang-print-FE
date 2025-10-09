@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:horang_print/app/extension/build_context_x.dart';
+import 'package:horang_print/app/feature/final_confirm/logic/final_confirm_provider.dart';
 import 'package:horang_print/app/feature/photo_taking/logic/photo_taking_provider.dart';
 import 'package:horang_print/app/feature/style_selection/logic/style_selection_provider.dart';
 import 'package:horang_print/app/routing/router_service.dart';
@@ -42,7 +43,8 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
   void _navigateToStart() {
     ref.read(photoTakingProvider.notifier).reset();
     ref.read(styleSelectionProvider.notifier).reset();
-    context.go(Routes.home);
+    ref.read(finalConfirmProvider.notifier).reset();
+    context.go(Routes.start);
   }
 
   @override

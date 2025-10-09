@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:horang_print/app/extension/build_context_x.dart';
 import 'package:horang_print/app/feature/photo_taking/logic/photo_taking_state.dart';
 import 'package:image/image.dart' as img;
 
@@ -15,6 +18,11 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
   Timer? _countdownTimer;
 
   PhotoTakingNotifier() : super(const PhotoTakingState());
+
+  double calculateDottedBoxSize(BuildContext context) {
+    return state.cameraController!.value.previewSize!.height *
+        (context.width / state.cameraController!.value.previewSize!.width);
+  }
 
   Future<void> initCamera({
     required Size photoSize,
@@ -42,6 +50,8 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
         previewPauseOrientation: Optional.of(DeviceOrientation.landscapeLeft),
         lockedCaptureOrientation: Optional.of(DeviceOrientation.landscapeLeft),
         deviceOrientation: DeviceOrientation.landscapeLeft,
+        exposureMode: ExposureMode.auto,
+        focusMode: FocusMode.auto,
       );
 
       state = state.copyWith(
@@ -88,35 +98,14 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
 
       final image = await controller.takePicture();
       final imageBytes = await image.readAsBytes();
-
-      // // Decode image
-      // final decodedImage = img.decodeImage(imageBytes);
-      // if (decodedImage == null) {
-      //   throw Exception('Failed to decode image');
-      // }
-
-      // // Crop to 1:1 aspect ratio (center crop)
-      // final size = decodedImage.width < decodedImage.height
-      //     ? decodedImage.width
-      //     : decodedImage.height;
-
-      // final x = (decodedImage.width - size) ~/ 2;
-      // final y = (decodedImage.height - size) ~/ 2;
-
-      // final croppedImage = img.copyCrop(
-      //   decodedImage,
-      //   x: x,
-      //   y: y,
-      //   width: size,
-      //   height: size,
-      // );
-
-      // // Encode back to bytes
-      // final croppedBytes = img.encodeJpg(croppedImage);
+      final originalImage = img.decodeImage(imageBytes);
+      if (originalImage == null) return;
+      final flippedImage = img.flipHorizontal(originalImage);
+      final finalBytes = img.encodePng(flippedImage);
 
       state = state.copyWith(
         isCapturing: false,
-        capturedImage: imageBytes,
+        capturedImage: finalBytes,
       );
     } catch (e) {
       state = state.copyWith(

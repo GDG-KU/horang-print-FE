@@ -20,10 +20,11 @@ AiStyle _$AiStyleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AiStyle {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get exampleImageUrl => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  bool get is_active => throw _privateConstructorUsedError;
 
   /// Serializes this AiStyle to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +41,7 @@ abstract class $AiStyleCopyWith<$Res> {
       _$AiStyleCopyWithImpl<$Res, AiStyle>;
   @useResult
   $Res call(
-      {String id, String name, String exampleImageUrl, String? description});
+      {int id, String code, String name, String description, bool is_active});
 }
 
 /// @nodoc
@@ -59,27 +60,32 @@ class _$AiStyleCopyWithImpl<$Res, $Val extends AiStyle>
   @override
   $Res call({
     Object? id = null,
+    Object? code = null,
     Object? name = null,
-    Object? exampleImageUrl = null,
-    Object? description = freezed,
+    Object? description = null,
+    Object? is_active = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      exampleImageUrl: null == exampleImageUrl
-          ? _value.exampleImageUrl
-          : exampleImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      is_active: null == is_active
+          ? _value.is_active
+          : is_active // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -92,7 +98,7 @@ abstract class _$$AiStyleImplCopyWith<$Res> implements $AiStyleCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id, String name, String exampleImageUrl, String? description});
+      {int id, String code, String name, String description, bool is_active});
 }
 
 /// @nodoc
@@ -109,27 +115,32 @@ class __$$AiStyleImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? code = null,
     Object? name = null,
-    Object? exampleImageUrl = null,
-    Object? description = freezed,
+    Object? description = null,
+    Object? is_active = null,
   }) {
     return _then(_$AiStyleImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      exampleImageUrl: null == exampleImageUrl
-          ? _value.exampleImageUrl
-          : exampleImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      is_active: null == is_active
+          ? _value.is_active
+          : is_active // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -139,25 +150,29 @@ class __$$AiStyleImplCopyWithImpl<$Res>
 class _$AiStyleImpl implements _AiStyle {
   const _$AiStyleImpl(
       {required this.id,
+      required this.code,
       required this.name,
-      required this.exampleImageUrl,
-      this.description});
+      required this.description,
+      this.is_active = false});
 
   factory _$AiStyleImpl.fromJson(Map<String, dynamic> json) =>
       _$$AiStyleImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
+  @override
+  final String code;
   @override
   final String name;
   @override
-  final String exampleImageUrl;
+  final String description;
   @override
-  final String? description;
+  @JsonKey()
+  final bool is_active;
 
   @override
   String toString() {
-    return 'AiStyle(id: $id, name: $name, exampleImageUrl: $exampleImageUrl, description: $description)';
+    return 'AiStyle(id: $id, code: $code, name: $name, description: $description, is_active: $is_active)';
   }
 
   @override
@@ -166,17 +181,18 @@ class _$AiStyleImpl implements _AiStyle {
         (other.runtimeType == runtimeType &&
             other is _$AiStyleImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.exampleImageUrl, exampleImageUrl) ||
-                other.exampleImageUrl == exampleImageUrl) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.is_active, is_active) ||
+                other.is_active == is_active));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, exampleImageUrl, description);
+      Object.hash(runtimeType, id, code, name, description, is_active);
 
   /// Create a copy of AiStyle
   /// with the given fields replaced by the non-null parameter values.
@@ -196,21 +212,24 @@ class _$AiStyleImpl implements _AiStyle {
 
 abstract class _AiStyle implements AiStyle {
   const factory _AiStyle(
-      {required final String id,
+      {required final int id,
+      required final String code,
       required final String name,
-      required final String exampleImageUrl,
-      final String? description}) = _$AiStyleImpl;
+      required final String description,
+      final bool is_active}) = _$AiStyleImpl;
 
   factory _AiStyle.fromJson(Map<String, dynamic> json) = _$AiStyleImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
+  @override
+  String get code;
   @override
   String get name;
   @override
-  String get exampleImageUrl;
+  String get description;
   @override
-  String? get description;
+  bool get is_active;
 
   /// Create a copy of AiStyle
   /// with the given fields replaced by the non-null parameter values.

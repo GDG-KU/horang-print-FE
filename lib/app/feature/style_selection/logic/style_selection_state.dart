@@ -7,7 +7,8 @@ part 'style_selection_state.freezed.dart';
 class StyleSelectionState with _$StyleSelectionState {
   const factory StyleSelectionState({
     @Default([]) List<AiStyle> styles,
-    String? selectedStyleId,
     @Default(false) bool isLoading,
+    @Default(false) bool isError,
+    int? selectedStyleId,
   }) = _StyleSelectionState;
 }

@@ -20,7 +20,7 @@ class StyleSelectionPage extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
-            context.go(Routes.home);
+            context.go(Routes.start);
           },
         ),
         title: Text(
@@ -35,35 +35,56 @@ class StyleSelectionPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: state.isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : CarouselSlider.builder(
-                        itemCount: state.styles.length,
-                        itemBuilder: (context, index, realIndex) {
-                          final style = state.styles[index];
-                          final isSelected = state.selectedStyleId == style.id;
-
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: StyleCard(
-                              style: style,
-                              isSelected: isSelected,
-                              onTap: () {
-                                ref
-                                    .read(styleSelectionProvider.notifier)
-                                    .toggleStyle(style.id);
-                              },
-                            ),
-                          );
+                child: Builder(builder: (context) {
+                  if (state.isLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (state.isError) {
+                    return Center(
+                      child: ShadButton(
+                        size: ShadButtonSize.lg,
+                        onPressed: () {
+                          ref
+                              .read(styleSelectionProvider.notifier)
+                              .loadStyles();
                         },
-                        options: CarouselOptions(
-                          height: double.infinity,
-                          viewportFraction: 0.45,
-                          enlargeCenterPage: true,
-                          enableInfiniteScroll: false,
+                        icon: const Icon(Icons.refresh),
+                        child: Text(
+                          '재시도',
+                          style: context.textTheme.large.copyWith(
+                            color: context.colorScheme.secondary,
+                          ),
                         ),
                       ),
+                    );
+                  }
+                  return CarouselSlider.builder(
+                    itemCount: state.styles.length,
+                    itemBuilder: (context, index, realIndex) {
+                      final style = state.styles[index];
+                      final isSelected = state.selectedStyleId == style.id;
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: StyleCard(
+                          style: style,
+                          isSelected: isSelected,
+                          onTap: () {
+                            ref
+                                .read(styleSelectionProvider.notifier)
+                                .toggleStyle(style.id);
+                          },
+                        ),
+                      );
+                    },
+                    options: CarouselOptions(
+                      height: double.infinity,
+                      viewportFraction: 0.45,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: false,
+                    ),
+                  );
+                }),
               ),
               const SizedBox(height: 24),
               Row(

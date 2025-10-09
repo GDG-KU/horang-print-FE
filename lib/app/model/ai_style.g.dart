@@ -8,16 +8,18 @@ part of 'ai_style.dart';
 
 _$AiStyleImpl _$$AiStyleImplFromJson(Map<String, dynamic> json) =>
     _$AiStyleImpl(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
+      code: json['code'] as String,
       name: json['name'] as String,
-      exampleImageUrl: json['exampleImageUrl'] as String,
-      description: json['description'] as String?,
+      description: json['description'] as String,
+      is_active: json['is_active'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$AiStyleImplToJson(_$AiStyleImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'code': instance.code,
       'name': instance.name,
-      'exampleImageUrl': instance.exampleImageUrl,
       'description': instance.description,
+      'is_active': instance.is_active,
     };

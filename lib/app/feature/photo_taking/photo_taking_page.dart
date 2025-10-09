@@ -1,4 +1,4 @@
-import 'package:camera/camera.dart';
+import 'package:dotted_box/dotted_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -44,13 +44,16 @@ class _PhotoTakingPageState extends ConsumerState<PhotoTakingPage> {
               state.cameraController!.value.isInitialized)
             Center(
               child: ClipRect(
-                child: AspectRatio(
-                  aspectRatio: state.cameraController!.value.aspectRatio,
-                  child: ValueListenableBuilder(
-                    valueListenable: state.cameraController!,
-                    builder: (context, controller, child) {
-                      return state.cameraController!.buildPreview();
-                    },
+                child: Transform.flip(
+                  flipX: true,
+                  child: AspectRatio(
+                    aspectRatio: state.cameraController!.value.aspectRatio,
+                    child: ValueListenableBuilder(
+                      valueListenable: state.cameraController!,
+                      builder: (context, controller, child) {
+                        return state.cameraController!.buildPreview();
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -96,7 +99,10 @@ class _PhotoTakingPageState extends ConsumerState<PhotoTakingPage> {
                   child: Row(
                     children: [
                       ShadButton.ghost(
-                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        foregroundColor: Colors.white,
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new,
+                        ),
                         onPressed: () {
                           ref.read(photoTakingProvider.notifier).reset();
                           context.go(Routes.styleSelection);
@@ -170,6 +176,32 @@ class _PhotoTakingPageState extends ConsumerState<PhotoTakingPage> {
                 ),
               ],
             ),
+          ),
+          IgnorePointer(
+            child: state.cameraController?.value.isInitialized == true
+                ? SafeArea(
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 8),
+                        child: DottedBox(
+                          height: ref
+                              .read(photoTakingProvider.notifier)
+                              .calculateDottedBoxSize(context),
+                          width: ref
+                              .read(photoTakingProvider.notifier)
+                              .calculateDottedBoxSize(context),
+                          borderThickness: 4,
+                          borderColor: Colors.white,
+                          borderRadius: 20,
+                          space: 3,
+                          borderShape: Shape.rectangle,
+                          dashCounts: 36,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),

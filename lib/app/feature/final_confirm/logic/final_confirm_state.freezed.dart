@@ -16,10 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FinalConfirmState {
-  bool get isProcessing => throw _privateConstructorUsedError;
-  Uint8List? get transformedImage => throw _privateConstructorUsedError;
-  String? get downloadUrl => throw _privateConstructorUsedError;
-  String? get qrCodeData => throw _privateConstructorUsedError;
+  Uint8List? get originalImage => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of FinalConfirmState
@@ -35,12 +32,7 @@ abstract class $FinalConfirmStateCopyWith<$Res> {
           FinalConfirmState value, $Res Function(FinalConfirmState) then) =
       _$FinalConfirmStateCopyWithImpl<$Res, FinalConfirmState>;
   @useResult
-  $Res call(
-      {bool isProcessing,
-      Uint8List? transformedImage,
-      String? downloadUrl,
-      String? qrCodeData,
-      String? error});
+  $Res call({Uint8List? originalImage, String? error});
 }
 
 /// @nodoc
@@ -58,29 +50,14 @@ class _$FinalConfirmStateCopyWithImpl<$Res, $Val extends FinalConfirmState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isProcessing = null,
-    Object? transformedImage = freezed,
-    Object? downloadUrl = freezed,
-    Object? qrCodeData = freezed,
+    Object? originalImage = freezed,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      isProcessing: null == isProcessing
-          ? _value.isProcessing
-          : isProcessing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      transformedImage: freezed == transformedImage
-          ? _value.transformedImage
-          : transformedImage // ignore: cast_nullable_to_non_nullable
+      originalImage: freezed == originalImage
+          ? _value.originalImage
+          : originalImage // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      downloadUrl: freezed == downloadUrl
-          ? _value.downloadUrl
-          : downloadUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      qrCodeData: freezed == qrCodeData
-          ? _value.qrCodeData
-          : qrCodeData // ignore: cast_nullable_to_non_nullable
-              as String?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -97,12 +74,7 @@ abstract class _$$FinalConfirmStateImplCopyWith<$Res>
       __$$FinalConfirmStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool isProcessing,
-      Uint8List? transformedImage,
-      String? downloadUrl,
-      String? qrCodeData,
-      String? error});
+  $Res call({Uint8List? originalImage, String? error});
 }
 
 /// @nodoc
@@ -118,29 +90,14 @@ class __$$FinalConfirmStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isProcessing = null,
-    Object? transformedImage = freezed,
-    Object? downloadUrl = freezed,
-    Object? qrCodeData = freezed,
+    Object? originalImage = freezed,
     Object? error = freezed,
   }) {
     return _then(_$FinalConfirmStateImpl(
-      isProcessing: null == isProcessing
-          ? _value.isProcessing
-          : isProcessing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      transformedImage: freezed == transformedImage
-          ? _value.transformedImage
-          : transformedImage // ignore: cast_nullable_to_non_nullable
+      originalImage: freezed == originalImage
+          ? _value.originalImage
+          : originalImage // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      downloadUrl: freezed == downloadUrl
-          ? _value.downloadUrl
-          : downloadUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      qrCodeData: freezed == qrCodeData
-          ? _value.qrCodeData
-          : qrCodeData // ignore: cast_nullable_to_non_nullable
-              as String?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -152,28 +109,16 @@ class __$$FinalConfirmStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FinalConfirmStateImpl implements _FinalConfirmState {
-  const _$FinalConfirmStateImpl(
-      {this.isProcessing = true,
-      this.transformedImage,
-      this.downloadUrl,
-      this.qrCodeData,
-      this.error});
+  const _$FinalConfirmStateImpl({this.originalImage, this.error});
 
   @override
-  @JsonKey()
-  final bool isProcessing;
-  @override
-  final Uint8List? transformedImage;
-  @override
-  final String? downloadUrl;
-  @override
-  final String? qrCodeData;
+  final Uint8List? originalImage;
   @override
   final String? error;
 
   @override
   String toString() {
-    return 'FinalConfirmState(isProcessing: $isProcessing, transformedImage: $transformedImage, downloadUrl: $downloadUrl, qrCodeData: $qrCodeData, error: $error)';
+    return 'FinalConfirmState(originalImage: $originalImage, error: $error)';
   }
 
   @override
@@ -181,25 +126,14 @@ class _$FinalConfirmStateImpl implements _FinalConfirmState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FinalConfirmStateImpl &&
-            (identical(other.isProcessing, isProcessing) ||
-                other.isProcessing == isProcessing) &&
             const DeepCollectionEquality()
-                .equals(other.transformedImage, transformedImage) &&
-            (identical(other.downloadUrl, downloadUrl) ||
-                other.downloadUrl == downloadUrl) &&
-            (identical(other.qrCodeData, qrCodeData) ||
-                other.qrCodeData == qrCodeData) &&
+                .equals(other.originalImage, originalImage) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      isProcessing,
-      const DeepCollectionEquality().hash(transformedImage),
-      downloadUrl,
-      qrCodeData,
-      error);
+      runtimeType, const DeepCollectionEquality().hash(originalImage), error);
 
   /// Create a copy of FinalConfirmState
   /// with the given fields replaced by the non-null parameter values.
@@ -213,20 +147,11 @@ class _$FinalConfirmStateImpl implements _FinalConfirmState {
 
 abstract class _FinalConfirmState implements FinalConfirmState {
   const factory _FinalConfirmState(
-      {final bool isProcessing,
-      final Uint8List? transformedImage,
-      final String? downloadUrl,
-      final String? qrCodeData,
+      {final Uint8List? originalImage,
       final String? error}) = _$FinalConfirmStateImpl;
 
   @override
-  bool get isProcessing;
-  @override
-  Uint8List? get transformedImage;
-  @override
-  String? get downloadUrl;
-  @override
-  String? get qrCodeData;
+  Uint8List? get originalImage;
   @override
   String? get error;
 

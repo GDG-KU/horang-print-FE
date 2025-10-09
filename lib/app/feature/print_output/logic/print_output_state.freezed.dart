@@ -20,6 +20,7 @@ mixin _$PrintOutputState {
   int get minQuantity => throw _privateConstructorUsedError;
   int get maxQuantity => throw _privateConstructorUsedError;
   bool get isPrinting => throw _privateConstructorUsedError;
+  Uint8List? get capturedImage => throw _privateConstructorUsedError;
 
   /// Create a copy of PrintOutputState
   /// with the given fields replaced by the non-null parameter values.
@@ -35,7 +36,11 @@ abstract class $PrintOutputStateCopyWith<$Res> {
       _$PrintOutputStateCopyWithImpl<$Res, PrintOutputState>;
   @useResult
   $Res call(
-      {int printQuantity, int minQuantity, int maxQuantity, bool isPrinting});
+      {int printQuantity,
+      int minQuantity,
+      int maxQuantity,
+      bool isPrinting,
+      Uint8List? capturedImage});
 }
 
 /// @nodoc
@@ -57,6 +62,7 @@ class _$PrintOutputStateCopyWithImpl<$Res, $Val extends PrintOutputState>
     Object? minQuantity = null,
     Object? maxQuantity = null,
     Object? isPrinting = null,
+    Object? capturedImage = freezed,
   }) {
     return _then(_value.copyWith(
       printQuantity: null == printQuantity
@@ -75,6 +81,10 @@ class _$PrintOutputStateCopyWithImpl<$Res, $Val extends PrintOutputState>
           ? _value.isPrinting
           : isPrinting // ignore: cast_nullable_to_non_nullable
               as bool,
+      capturedImage: freezed == capturedImage
+          ? _value.capturedImage
+          : capturedImage // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
     ) as $Val);
   }
 }
@@ -88,7 +98,11 @@ abstract class _$$PrintOutputStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int printQuantity, int minQuantity, int maxQuantity, bool isPrinting});
+      {int printQuantity,
+      int minQuantity,
+      int maxQuantity,
+      bool isPrinting,
+      Uint8List? capturedImage});
 }
 
 /// @nodoc
@@ -108,6 +122,7 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
     Object? minQuantity = null,
     Object? maxQuantity = null,
     Object? isPrinting = null,
+    Object? capturedImage = freezed,
   }) {
     return _then(_$PrintOutputStateImpl(
       printQuantity: null == printQuantity
@@ -126,6 +141,10 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
           ? _value.isPrinting
           : isPrinting // ignore: cast_nullable_to_non_nullable
               as bool,
+      capturedImage: freezed == capturedImage
+          ? _value.capturedImage
+          : capturedImage // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
     ));
   }
 }
@@ -137,7 +156,8 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
       {this.printQuantity = 1,
       this.minQuantity = 1,
       this.maxQuantity = 8,
-      this.isPrinting = false});
+      this.isPrinting = false,
+      this.capturedImage});
 
   @override
   @JsonKey()
@@ -151,10 +171,12 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
   @override
   @JsonKey()
   final bool isPrinting;
+  @override
+  final Uint8List? capturedImage;
 
   @override
   String toString() {
-    return 'PrintOutputState(printQuantity: $printQuantity, minQuantity: $minQuantity, maxQuantity: $maxQuantity, isPrinting: $isPrinting)';
+    return 'PrintOutputState(printQuantity: $printQuantity, minQuantity: $minQuantity, maxQuantity: $maxQuantity, isPrinting: $isPrinting, capturedImage: $capturedImage)';
   }
 
   @override
@@ -169,12 +191,19 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
             (identical(other.maxQuantity, maxQuantity) ||
                 other.maxQuantity == maxQuantity) &&
             (identical(other.isPrinting, isPrinting) ||
-                other.isPrinting == isPrinting));
+                other.isPrinting == isPrinting) &&
+            const DeepCollectionEquality()
+                .equals(other.capturedImage, capturedImage));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, printQuantity, minQuantity, maxQuantity, isPrinting);
+      runtimeType,
+      printQuantity,
+      minQuantity,
+      maxQuantity,
+      isPrinting,
+      const DeepCollectionEquality().hash(capturedImage));
 
   /// Create a copy of PrintOutputState
   /// with the given fields replaced by the non-null parameter values.
@@ -191,7 +220,8 @@ abstract class _PrintOutputState implements PrintOutputState {
       {final int printQuantity,
       final int minQuantity,
       final int maxQuantity,
-      final bool isPrinting}) = _$PrintOutputStateImpl;
+      final bool isPrinting,
+      final Uint8List? capturedImage}) = _$PrintOutputStateImpl;
 
   @override
   int get printQuantity;
@@ -201,6 +231,8 @@ abstract class _PrintOutputState implements PrintOutputState {
   int get maxQuantity;
   @override
   bool get isPrinting;
+  @override
+  Uint8List? get capturedImage;
 
   /// Create a copy of PrintOutputState
   /// with the given fields replaced by the non-null parameter values.

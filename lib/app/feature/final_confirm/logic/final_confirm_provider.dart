@@ -1,30 +1,45 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:horang_print/app/api/api_service.dart';
 import 'package:horang_print/app/feature/final_confirm/logic/final_confirm_state.dart';
 
 final finalConfirmProvider =
-    StateNotifierProvider<FinalConfirmNotifier, FinalConfirmState>((ref) {
-  return FinalConfirmNotifier()..processImage();
-});
+    NotifierProvider<FinalConfirmNotifier, FinalConfirmState>(
+  FinalConfirmNotifier.new,
+);
 
-class FinalConfirmNotifier extends StateNotifier<FinalConfirmState> {
-  FinalConfirmNotifier() : super(const FinalConfirmState());
+class FinalConfirmNotifier extends Notifier<FinalConfirmState> {
+  @override
+  FinalConfirmState build() {
+    return const FinalConfirmState();
+  }
 
-  Future<void> processImage() async {
-    state = state.copyWith(isProcessing: true);
-
-    await Future.delayed(const Duration(seconds: 3));
-
-    final mockTransformedImage = Uint8List(100);
-    const mockDownloadUrl = 'https://example.com/image/12345';
-    const mockQrData = 'https://example.com/download/12345';
-
+  Future<void> submitOriginalImage(
+    Uint8List imageByte,
+    String sessionUuid,
+  ) async {
     state = state.copyWith(
-      isProcessing: false,
-      transformedImage: mockTransformedImage,
-      downloadUrl: mockDownloadUrl,
-      qrCodeData: mockQrData,
+      originalImage: imageByte,
+    );
+
+    log('Submitting original image, session UUID: $sessionUuid, size: ${imageByte.lengthInBytes} bytes');
+
+    final result = await ApiService.I.submitOriginalImage(
+      imageByte,
+      sessionUuid,
+    );
+
+    result.fold(
+      onSuccess: (_) {
+        state = state.copyWith();
+      },
+      onFailure: (error) {
+        state = state.copyWith(
+          error: error.message,
+        );
+      },
     );
   }
 

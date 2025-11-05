@@ -46,3 +46,4 @@ app.*.map.json
 CLAUDE.md
 shadcn_guide.md
 spec.md
+./lib_sdk/

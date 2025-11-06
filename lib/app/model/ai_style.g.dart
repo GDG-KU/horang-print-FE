@@ -13,6 +13,7 @@ _$AiStyleImpl _$$AiStyleImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       description: json['description'] as String,
       is_active: json['is_active'] as bool? ?? false,
+      thumbnail_url: json['thumbnail_url'] as String? ?? "",
     );
 
 Map<String, dynamic> _$$AiStyleImplToJson(_$AiStyleImpl instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$AiStyleImplToJson(_$AiStyleImpl instance) =>
       'name': instance.name,
       'description': instance.description,
       'is_active': instance.is_active,
+      'thumbnail_url': instance.thumbnail_url,
     };

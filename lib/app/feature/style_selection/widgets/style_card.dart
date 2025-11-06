@@ -41,36 +41,36 @@ class StyleCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Expanded(
-                    //     flex: 3,
-                    //     child: Image.asset(
-                    //       style.exampleImageUrl,
-                    //       fit: BoxFit.cover,
-                    //       errorBuilder: (context, error, stackTrace) {
-                    //         log('Error loading image: $error');
-                    //         return Container(
-                    //           decoration: BoxDecoration(
-                    //             gradient: LinearGradient(
-                    //               begin: Alignment.topLeft,
-                    //               end: Alignment.bottomRight,
-                    //               colors: [
-                    //                 context.colorScheme.primary
-                    //                     .withOpacity(0.2),
-                    //                 context.colorScheme.primaryForeground
-                    //                     .withOpacity(0.1),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //           child: const Center(
-                    //             child: Icon(
-                    //               Icons.auto_awesome,
-                    //               size: 48,
-                    //               color: Colors.white,
-                    //             ),
-                    //           ),
-                    //         );
-                    //       },
-                    //     )),
+                    Expanded(
+                        flex: 3,
+                        child: Image.network(
+                          style.thumbnail_url,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            log('Error loading image: $error');
+                            return Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    context.colorScheme.primary
+                                        .withOpacity(0.4),
+                                    context.colorScheme.primaryForeground
+                                        .withOpacity(0.5),
+                                  ],
+                                ),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.auto_awesome,
+                                  size: 48,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          },
+                        )),
                     Padding(
                       padding: const EdgeInsets.all(17.0),
                       child: Column(
@@ -85,8 +85,7 @@ class StyleCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          if (style.description != null)
-                            Text(style.description!),
+                          Text(style.description),
                         ],
                       ),
                     ),

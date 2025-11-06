@@ -29,6 +29,7 @@ dependencies:
   dotted_box: ^0.0.3
   loading_animation_widget: ^1.3.0
   pretty_qr_code: ^3.5.0
+  google_fonts: ^6.3.0
 
   flutter_sewoo_usb_printer:
     path: ./packages/flutter_sewoo_usb_printer

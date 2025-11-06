@@ -25,6 +25,7 @@ mixin _$AiStyle {
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   bool get is_active => throw _privateConstructorUsedError;
+  String get thumbnail_url => throw _privateConstructorUsedError;
 
   /// Serializes this AiStyle to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +42,12 @@ abstract class $AiStyleCopyWith<$Res> {
       _$AiStyleCopyWithImpl<$Res, AiStyle>;
   @useResult
   $Res call(
-      {int id, String code, String name, String description, bool is_active});
+      {int id,
+      String code,
+      String name,
+      String description,
+      bool is_active,
+      String thumbnail_url});
 }
 
 /// @nodoc
@@ -64,6 +70,7 @@ class _$AiStyleCopyWithImpl<$Res, $Val extends AiStyle>
     Object? name = null,
     Object? description = null,
     Object? is_active = null,
+    Object? thumbnail_url = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -86,6 +93,10 @@ class _$AiStyleCopyWithImpl<$Res, $Val extends AiStyle>
           ? _value.is_active
           : is_active // ignore: cast_nullable_to_non_nullable
               as bool,
+      thumbnail_url: null == thumbnail_url
+          ? _value.thumbnail_url
+          : thumbnail_url // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -98,7 +109,12 @@ abstract class _$$AiStyleImplCopyWith<$Res> implements $AiStyleCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id, String code, String name, String description, bool is_active});
+      {int id,
+      String code,
+      String name,
+      String description,
+      bool is_active,
+      String thumbnail_url});
 }
 
 /// @nodoc
@@ -119,6 +135,7 @@ class __$$AiStyleImplCopyWithImpl<$Res>
     Object? name = null,
     Object? description = null,
     Object? is_active = null,
+    Object? thumbnail_url = null,
   }) {
     return _then(_$AiStyleImpl(
       id: null == id
@@ -141,6 +158,10 @@ class __$$AiStyleImplCopyWithImpl<$Res>
           ? _value.is_active
           : is_active // ignore: cast_nullable_to_non_nullable
               as bool,
+      thumbnail_url: null == thumbnail_url
+          ? _value.thumbnail_url
+          : thumbnail_url // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -153,7 +174,8 @@ class _$AiStyleImpl implements _AiStyle {
       required this.code,
       required this.name,
       required this.description,
-      this.is_active = false});
+      this.is_active = false,
+      this.thumbnail_url = ""});
 
   factory _$AiStyleImpl.fromJson(Map<String, dynamic> json) =>
       _$$AiStyleImplFromJson(json);
@@ -169,10 +191,13 @@ class _$AiStyleImpl implements _AiStyle {
   @override
   @JsonKey()
   final bool is_active;
+  @override
+  @JsonKey()
+  final String thumbnail_url;
 
   @override
   String toString() {
-    return 'AiStyle(id: $id, code: $code, name: $name, description: $description, is_active: $is_active)';
+    return 'AiStyle(id: $id, code: $code, name: $name, description: $description, is_active: $is_active, thumbnail_url: $thumbnail_url)';
   }
 
   @override
@@ -186,13 +211,15 @@ class _$AiStyleImpl implements _AiStyle {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.is_active, is_active) ||
-                other.is_active == is_active));
+                other.is_active == is_active) &&
+            (identical(other.thumbnail_url, thumbnail_url) ||
+                other.thumbnail_url == thumbnail_url));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, code, name, description, is_active);
+  int get hashCode => Object.hash(
+      runtimeType, id, code, name, description, is_active, thumbnail_url);
 
   /// Create a copy of AiStyle
   /// with the given fields replaced by the non-null parameter values.
@@ -216,7 +243,8 @@ abstract class _AiStyle implements AiStyle {
       required final String code,
       required final String name,
       required final String description,
-      final bool is_active}) = _$AiStyleImpl;
+      final bool is_active,
+      final String thumbnail_url}) = _$AiStyleImpl;
 
   factory _AiStyle.fromJson(Map<String, dynamic> json) = _$AiStyleImpl.fromJson;
 
@@ -230,6 +258,8 @@ abstract class _AiStyle implements AiStyle {
   String get description;
   @override
   bool get is_active;
+  @override
+  String get thumbnail_url;
 
   /// Create a copy of AiStyle
   /// with the given fields replaced by the non-null parameter values.

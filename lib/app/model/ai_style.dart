@@ -11,6 +11,7 @@ class AiStyle with _$AiStyle {
     required String name,
     required String description,
     @Default(false) bool is_active,
+    @Default("") String thumbnail_url,
   }) = _AiStyle;
 
   factory AiStyle.fromJson(Map<String, dynamic> json) =>

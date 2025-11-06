@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:horang_print/app/feature/completion/completion_page.dart';
 import 'package:horang_print/app/feature/error/error_page.dart';
 import 'package:horang_print/app/feature/final_confirm/final_confirm_page.dart';
+import 'package:horang_print/app/feature/management/management_page.dart';
 import 'package:horang_print/app/feature/photo_confirm/photo_confirm_page.dart';
 import 'package:horang_print/app/feature/photo_taking/photo_taking_page.dart';
 import 'package:horang_print/app/feature/print_output/print_output_page.dart';
@@ -37,6 +38,7 @@ abstract class Routes {
   static const String printOutput = '/print-output';
   static const String completion = '/completion';
   static const String error = '/error';
+  static const String management = '/management';
 }
 
 class RouterService {
@@ -96,8 +98,18 @@ class RouterService {
 
   void init() {
     router = GoRouter(
-      initialLocation: Routes.start,
+      initialLocation: Routes.management,
       routes: [
+        GoRoute(
+          path: Routes.management,
+          pageBuilder: (context, state) {
+            return buildPageWithDefaultTransition(
+              context: context,
+              state: state,
+              child: const ManagementPage(),
+            );
+          },
+        ),
         GoRoute(
           path: Routes.start,
           pageBuilder: (context, state) {

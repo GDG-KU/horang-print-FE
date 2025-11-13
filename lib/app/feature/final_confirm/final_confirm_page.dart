@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horang_print/app/extension/build_context_x.dart';
@@ -30,6 +31,9 @@ class FinalConfirmPage extends ConsumerWidget {
               child: Center(
                 child: Container(
                   padding: const EdgeInsets.all(24.0),
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 50,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.grey[100],
                     borderRadius: BorderRadius.circular(12),
@@ -76,35 +80,54 @@ class FinalConfirmPage extends ConsumerWidget {
                             ],
                           ),
                           const SizedBox(height: 18),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              width: 400,
-                              height: 400,
-                              decoration: BoxDecoration(
-                                image: state.originalImage != null
-                                    ? DecorationImage(
-                                        image:
-                                            MemoryImage(state.originalImage!),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : null,
-                              ),
-                              child: BackdropFilter(
-                                filter:
-                                    ImageFilter.blur(sigmaX: 13, sigmaY: 13),
-                                child: Container(
-                                  color: Colors.white.withOpacity(0.1),
-                                  child: Center(
-                                    child: LoadingAnimationWidget.inkDrop(
-                                      color: Colors.white,
-                                      size: 50,
+                          if (state.ai_image_url.isEmpty)
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                width: 400,
+                                height: 400,
+                                decoration: BoxDecoration(
+                                  image: state.originalImage != null
+                                      ? DecorationImage(
+                                          image:
+                                              MemoryImage(state.originalImage!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                ),
+                                child: BackdropFilter(
+                                  filter:
+                                      ImageFilter.blur(sigmaX: 13, sigmaY: 13),
+                                  child: Container(
+                                    color: Colors.white.withOpacity(0.1),
+                                    child: Center(
+                                      child: LoadingAnimationWidget.inkDrop(
+                                        color: Colors.white,
+                                        size: 50,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
+                          if (state.ai_image_url.isNotEmpty)
+                            CachedNetworkImage(
+                              imageUrl: state.ai_image_url,
+                              imageBuilder: (context, imageProvider) =>
+                                  ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: 400,
+                                  height: 400,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           const SizedBox(height: 24),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(20),

@@ -10,6 +10,8 @@ class SessionState with _$SessionState {
     @Default("") String session_uuid,
     SessionQr? qr,
     @Default(false) bool isDone,
+    @Default(false) bool isError,
+    @Default(0.0) double progress,
   }) = _SessionState;
 
   factory SessionState.fromJson(Map<String, dynamic> json) =>

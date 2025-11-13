@@ -33,13 +33,17 @@ class PrintOutputNotifier extends StateNotifier<PrintOutputState> {
 
   Future<void> startPrinting(WidgetRef ref) async {
     state = state.copyWith(isPrinting: true);
+    bool result = true;
     for (int i = 0; i < state.printQuantity; i++) {
-      ref.read(printerProvider.notifier).printImage(state.capturedImage!);
+      result = result &&
+          await ref
+              .read(printerProvider.notifier)
+              .printImage(state.capturedImage!);
       await Future.delayed(const Duration(seconds: 2));
       log('Printing copy ${i + 1} of ${state.printQuantity}');
     }
 
-    state = state.copyWith(isPrinting: false);
+    state = state.copyWith(isPrinting: false, isErrorOnPrinting: !result);
   }
 
   void reset() {

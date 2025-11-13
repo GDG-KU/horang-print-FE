@@ -7,6 +7,7 @@ part 'final_confirm_state.freezed.dart';
 class FinalConfirmState with _$FinalConfirmState {
   const factory FinalConfirmState({
     Uint8List? originalImage,
+    @Default("") String ai_image_url,
     String? error,
   }) = _FinalConfirmState;
 }

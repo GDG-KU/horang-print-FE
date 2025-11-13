@@ -50,16 +50,17 @@ class PrinterNotifier extends Notifier<PrinterState> {
     }
   }
 
-  void printImage(Uint8List imageBytes) async {
+  Future<bool> printImage(Uint8List imageBytes) async {
     if (!state.isConnected) {
       RouterService.I.showToast(
         "프린터가 연결되어 있지 않습니다.",
       );
-      return;
+      return false;
     }
     await SewooUsbPrinter.printImage(imageBytes);
     await SewooUsbPrinter.lineFeed(lines: 5);
     await SewooUsbPrinter.cutPaper();
+    return true;
   }
 }
 

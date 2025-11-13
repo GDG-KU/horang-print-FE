@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horang_print/app/api/api_service.dart';
+import 'package:horang_print/app/feature/final_confirm/logic/final_confirm_provider.dart';
+import 'package:horang_print/app/model/session_event.dart';
 import 'package:horang_print/app/model/session_state.dart';
 import 'package:horang_print/app/routing/router_service.dart';
 
@@ -35,12 +37,12 @@ class SessionNotifier extends Notifier<SessionState> {
   void _registerEventStream(String sessionUuid) async {
     final res = await ApiService.I.registerSessionEventStream(sessionUuid);
     res.fold(onSuccess: (stream) {
-      log(stream.toString());
-      log(stream.runtimeType.toString());
       stream.listen((event) {
         try {
           final data = jsonDecode(event);
-          log('Event Data: $data');
+          if (data.containsKey("status")) {
+            _handleSessionEvent(data);
+          }
         } catch (e) {
           log('JSON Decode Error: $e');
           return;
@@ -58,5 +60,34 @@ class SessionNotifier extends Notifier<SessionState> {
         description: error.message,
       );
     });
+  }
+
+  void _handleSessionEvent(dynamic json) {
+    log('Event Data: $json');
+    final type = SessionEvent.values.firstWhere(
+      (e) => e == json['status'],
+      orElse: () => SessionEvent.FAILED,
+    );
+
+    switch (type) {
+      case SessionEvent.AI_REQUESTED:
+        break;
+      case SessionEvent.RUNNING:
+        state = state.copyWith(
+          progress: json['progress_percent'] / 100 ?? state.progress,
+        );
+        break;
+      case SessionEvent.SUCCEEDED:
+        ref
+            .read(finalConfirmProvider.notifier)
+            .setAIImage(json['ai_image_url']);
+        break;
+      case SessionEvent.FAILED:
+        state = state.copyWith(
+          isError: true,
+          isDone: true,
+        );
+        break;
+    }
   }
 }

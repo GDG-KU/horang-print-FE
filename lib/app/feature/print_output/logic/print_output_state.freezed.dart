@@ -20,6 +20,7 @@ mixin _$PrintOutputState {
   int get minQuantity => throw _privateConstructorUsedError;
   int get maxQuantity => throw _privateConstructorUsedError;
   bool get isPrinting => throw _privateConstructorUsedError;
+  bool get isErrorOnPrinting => throw _privateConstructorUsedError;
   Uint8List? get capturedImage => throw _privateConstructorUsedError;
 
   /// Create a copy of PrintOutputState
@@ -40,6 +41,7 @@ abstract class $PrintOutputStateCopyWith<$Res> {
       int minQuantity,
       int maxQuantity,
       bool isPrinting,
+      bool isErrorOnPrinting,
       Uint8List? capturedImage});
 }
 
@@ -62,6 +64,7 @@ class _$PrintOutputStateCopyWithImpl<$Res, $Val extends PrintOutputState>
     Object? minQuantity = null,
     Object? maxQuantity = null,
     Object? isPrinting = null,
+    Object? isErrorOnPrinting = null,
     Object? capturedImage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +83,10 @@ class _$PrintOutputStateCopyWithImpl<$Res, $Val extends PrintOutputState>
       isPrinting: null == isPrinting
           ? _value.isPrinting
           : isPrinting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isErrorOnPrinting: null == isErrorOnPrinting
+          ? _value.isErrorOnPrinting
+          : isErrorOnPrinting // ignore: cast_nullable_to_non_nullable
               as bool,
       capturedImage: freezed == capturedImage
           ? _value.capturedImage
@@ -102,6 +109,7 @@ abstract class _$$PrintOutputStateImplCopyWith<$Res>
       int minQuantity,
       int maxQuantity,
       bool isPrinting,
+      bool isErrorOnPrinting,
       Uint8List? capturedImage});
 }
 
@@ -122,6 +130,7 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
     Object? minQuantity = null,
     Object? maxQuantity = null,
     Object? isPrinting = null,
+    Object? isErrorOnPrinting = null,
     Object? capturedImage = freezed,
   }) {
     return _then(_$PrintOutputStateImpl(
@@ -141,6 +150,10 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
           ? _value.isPrinting
           : isPrinting // ignore: cast_nullable_to_non_nullable
               as bool,
+      isErrorOnPrinting: null == isErrorOnPrinting
+          ? _value.isErrorOnPrinting
+          : isErrorOnPrinting // ignore: cast_nullable_to_non_nullable
+              as bool,
       capturedImage: freezed == capturedImage
           ? _value.capturedImage
           : capturedImage // ignore: cast_nullable_to_non_nullable
@@ -157,6 +170,7 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
       this.minQuantity = 1,
       this.maxQuantity = 8,
       this.isPrinting = false,
+      this.isErrorOnPrinting = false,
       this.capturedImage});
 
   @override
@@ -172,11 +186,14 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
   @JsonKey()
   final bool isPrinting;
   @override
+  @JsonKey()
+  final bool isErrorOnPrinting;
+  @override
   final Uint8List? capturedImage;
 
   @override
   String toString() {
-    return 'PrintOutputState(printQuantity: $printQuantity, minQuantity: $minQuantity, maxQuantity: $maxQuantity, isPrinting: $isPrinting, capturedImage: $capturedImage)';
+    return 'PrintOutputState(printQuantity: $printQuantity, minQuantity: $minQuantity, maxQuantity: $maxQuantity, isPrinting: $isPrinting, isErrorOnPrinting: $isErrorOnPrinting, capturedImage: $capturedImage)';
   }
 
   @override
@@ -192,6 +209,8 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
                 other.maxQuantity == maxQuantity) &&
             (identical(other.isPrinting, isPrinting) ||
                 other.isPrinting == isPrinting) &&
+            (identical(other.isErrorOnPrinting, isErrorOnPrinting) ||
+                other.isErrorOnPrinting == isErrorOnPrinting) &&
             const DeepCollectionEquality()
                 .equals(other.capturedImage, capturedImage));
   }
@@ -203,6 +222,7 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
       minQuantity,
       maxQuantity,
       isPrinting,
+      isErrorOnPrinting,
       const DeepCollectionEquality().hash(capturedImage));
 
   /// Create a copy of PrintOutputState
@@ -221,6 +241,7 @@ abstract class _PrintOutputState implements PrintOutputState {
       final int minQuantity,
       final int maxQuantity,
       final bool isPrinting,
+      final bool isErrorOnPrinting,
       final Uint8List? capturedImage}) = _$PrintOutputStateImpl;
 
   @override
@@ -231,6 +252,8 @@ abstract class _PrintOutputState implements PrintOutputState {
   int get maxQuantity;
   @override
   bool get isPrinting;
+  @override
+  bool get isErrorOnPrinting;
   @override
   Uint8List? get capturedImage;
 

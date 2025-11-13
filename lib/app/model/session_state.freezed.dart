@@ -23,6 +23,8 @@ mixin _$SessionState {
   String get session_uuid => throw _privateConstructorUsedError;
   SessionQr? get qr => throw _privateConstructorUsedError;
   bool get isDone => throw _privateConstructorUsedError;
+  bool get isError => throw _privateConstructorUsedError;
+  double get progress => throw _privateConstructorUsedError;
 
   /// Serializes this SessionState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +42,12 @@ abstract class $SessionStateCopyWith<$Res> {
           SessionState value, $Res Function(SessionState) then) =
       _$SessionStateCopyWithImpl<$Res, SessionState>;
   @useResult
-  $Res call({String session_uuid, SessionQr? qr, bool isDone});
+  $Res call(
+      {String session_uuid,
+      SessionQr? qr,
+      bool isDone,
+      bool isError,
+      double progress});
 
   $SessionQrCopyWith<$Res>? get qr;
 }
@@ -63,6 +70,8 @@ class _$SessionStateCopyWithImpl<$Res, $Val extends SessionState>
     Object? session_uuid = null,
     Object? qr = freezed,
     Object? isDone = null,
+    Object? isError = null,
+    Object? progress = null,
   }) {
     return _then(_value.copyWith(
       session_uuid: null == session_uuid
@@ -77,6 +86,14 @@ class _$SessionStateCopyWithImpl<$Res, $Val extends SessionState>
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
               as bool,
+      isError: null == isError
+          ? _value.isError
+          : isError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      progress: null == progress
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 
@@ -103,7 +120,12 @@ abstract class _$$SessionStateImplCopyWith<$Res>
       __$$SessionStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String session_uuid, SessionQr? qr, bool isDone});
+  $Res call(
+      {String session_uuid,
+      SessionQr? qr,
+      bool isDone,
+      bool isError,
+      double progress});
 
   @override
   $SessionQrCopyWith<$Res>? get qr;
@@ -125,6 +147,8 @@ class __$$SessionStateImplCopyWithImpl<$Res>
     Object? session_uuid = null,
     Object? qr = freezed,
     Object? isDone = null,
+    Object? isError = null,
+    Object? progress = null,
   }) {
     return _then(_$SessionStateImpl(
       session_uuid: null == session_uuid
@@ -139,6 +163,14 @@ class __$$SessionStateImplCopyWithImpl<$Res>
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
               as bool,
+      isError: null == isError
+          ? _value.isError
+          : isError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      progress: null == progress
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -146,7 +178,12 @@ class __$$SessionStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SessionStateImpl implements _SessionState {
-  _$SessionStateImpl({this.session_uuid = "", this.qr, this.isDone = false});
+  _$SessionStateImpl(
+      {this.session_uuid = "",
+      this.qr,
+      this.isDone = false,
+      this.isError = false,
+      this.progress = 0.0});
 
   factory _$SessionStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$SessionStateImplFromJson(json);
@@ -159,10 +196,16 @@ class _$SessionStateImpl implements _SessionState {
   @override
   @JsonKey()
   final bool isDone;
+  @override
+  @JsonKey()
+  final bool isError;
+  @override
+  @JsonKey()
+  final double progress;
 
   @override
   String toString() {
-    return 'SessionState(session_uuid: $session_uuid, qr: $qr, isDone: $isDone)';
+    return 'SessionState(session_uuid: $session_uuid, qr: $qr, isDone: $isDone, isError: $isError, progress: $progress)';
   }
 
   @override
@@ -173,12 +216,16 @@ class _$SessionStateImpl implements _SessionState {
             (identical(other.session_uuid, session_uuid) ||
                 other.session_uuid == session_uuid) &&
             (identical(other.qr, qr) || other.qr == qr) &&
-            (identical(other.isDone, isDone) || other.isDone == isDone));
+            (identical(other.isDone, isDone) || other.isDone == isDone) &&
+            (identical(other.isError, isError) || other.isError == isError) &&
+            (identical(other.progress, progress) ||
+                other.progress == progress));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, session_uuid, qr, isDone);
+  int get hashCode =>
+      Object.hash(runtimeType, session_uuid, qr, isDone, isError, progress);
 
   /// Create a copy of SessionState
   /// with the given fields replaced by the non-null parameter values.
@@ -200,7 +247,9 @@ abstract class _SessionState implements SessionState {
   factory _SessionState(
       {final String session_uuid,
       final SessionQr? qr,
-      final bool isDone}) = _$SessionStateImpl;
+      final bool isDone,
+      final bool isError,
+      final double progress}) = _$SessionStateImpl;
 
   factory _SessionState.fromJson(Map<String, dynamic> json) =
       _$SessionStateImpl.fromJson;
@@ -211,6 +260,10 @@ abstract class _SessionState implements SessionState {
   SessionQr? get qr;
   @override
   bool get isDone;
+  @override
+  bool get isError;
+  @override
+  double get progress;
 
   /// Create a copy of SessionState
   /// with the given fields replaced by the non-null parameter values.

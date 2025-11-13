@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FinalConfirmState {
   Uint8List? get originalImage => throw _privateConstructorUsedError;
+  String get ai_image_url => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of FinalConfirmState
@@ -32,7 +33,7 @@ abstract class $FinalConfirmStateCopyWith<$Res> {
           FinalConfirmState value, $Res Function(FinalConfirmState) then) =
       _$FinalConfirmStateCopyWithImpl<$Res, FinalConfirmState>;
   @useResult
-  $Res call({Uint8List? originalImage, String? error});
+  $Res call({Uint8List? originalImage, String ai_image_url, String? error});
 }
 
 /// @nodoc
@@ -51,6 +52,7 @@ class _$FinalConfirmStateCopyWithImpl<$Res, $Val extends FinalConfirmState>
   @override
   $Res call({
     Object? originalImage = freezed,
+    Object? ai_image_url = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -58,6 +60,10 @@ class _$FinalConfirmStateCopyWithImpl<$Res, $Val extends FinalConfirmState>
           ? _value.originalImage
           : originalImage // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
+      ai_image_url: null == ai_image_url
+          ? _value.ai_image_url
+          : ai_image_url // ignore: cast_nullable_to_non_nullable
+              as String,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -74,7 +80,7 @@ abstract class _$$FinalConfirmStateImplCopyWith<$Res>
       __$$FinalConfirmStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Uint8List? originalImage, String? error});
+  $Res call({Uint8List? originalImage, String ai_image_url, String? error});
 }
 
 /// @nodoc
@@ -91,6 +97,7 @@ class __$$FinalConfirmStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? originalImage = freezed,
+    Object? ai_image_url = null,
     Object? error = freezed,
   }) {
     return _then(_$FinalConfirmStateImpl(
@@ -98,6 +105,10 @@ class __$$FinalConfirmStateImplCopyWithImpl<$Res>
           ? _value.originalImage
           : originalImage // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
+      ai_image_url: null == ai_image_url
+          ? _value.ai_image_url
+          : ai_image_url // ignore: cast_nullable_to_non_nullable
+              as String,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -109,16 +120,20 @@ class __$$FinalConfirmStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FinalConfirmStateImpl implements _FinalConfirmState {
-  const _$FinalConfirmStateImpl({this.originalImage, this.error});
+  const _$FinalConfirmStateImpl(
+      {this.originalImage, this.ai_image_url = "", this.error});
 
   @override
   final Uint8List? originalImage;
+  @override
+  @JsonKey()
+  final String ai_image_url;
   @override
   final String? error;
 
   @override
   String toString() {
-    return 'FinalConfirmState(originalImage: $originalImage, error: $error)';
+    return 'FinalConfirmState(originalImage: $originalImage, ai_image_url: $ai_image_url, error: $error)';
   }
 
   @override
@@ -128,12 +143,14 @@ class _$FinalConfirmStateImpl implements _FinalConfirmState {
             other is _$FinalConfirmStateImpl &&
             const DeepCollectionEquality()
                 .equals(other.originalImage, originalImage) &&
+            (identical(other.ai_image_url, ai_image_url) ||
+                other.ai_image_url == ai_image_url) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(originalImage), error);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(originalImage), ai_image_url, error);
 
   /// Create a copy of FinalConfirmState
   /// with the given fields replaced by the non-null parameter values.
@@ -148,10 +165,13 @@ class _$FinalConfirmStateImpl implements _FinalConfirmState {
 abstract class _FinalConfirmState implements FinalConfirmState {
   const factory _FinalConfirmState(
       {final Uint8List? originalImage,
+      final String ai_image_url,
       final String? error}) = _$FinalConfirmStateImpl;
 
   @override
   Uint8List? get originalImage;
+  @override
+  String get ai_image_url;
   @override
   String? get error;
 

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:horang_print/app/extension/build_context_x.dart';
 import 'package:horang_print/app/model/ai_style.dart';
@@ -43,10 +44,10 @@ class StyleCard extends StatelessWidget {
                   children: [
                     Expanded(
                         flex: 3,
-                        child: Image.network(
-                          style.thumbnail_url,
+                        child: CachedNetworkImage(
+                          imageUrl: style.thumbnail_url,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
+                          errorWidget: (context, error, stackTrace) {
                             log('Error loading image: $error');
                             return Container(
                               decoration: BoxDecoration(

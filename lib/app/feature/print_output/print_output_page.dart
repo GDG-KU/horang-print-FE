@@ -16,7 +16,9 @@ class PrintOutputPage extends ConsumerWidget {
     final state = ref.watch(printOutputProvider);
 
     ref.listen(printOutputProvider, (previous, next) {
-      if (previous?.isPrinting == true && next.isPrinting == false) {
+      if (previous?.isPrinting == true &&
+          next.isPrinting == false &&
+          next.isErrorOnPrinting == false) {
         context.go(Routes.completion);
       }
     });

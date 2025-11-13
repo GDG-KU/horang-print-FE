@@ -32,14 +32,18 @@ class FinalConfirmNotifier extends Notifier<FinalConfirmState> {
     );
 
     result.fold(
-      onSuccess: (_) {
-        state = state.copyWith();
-      },
+      onSuccess: (_) {},
       onFailure: (error) {
         state = state.copyWith(
           error: error.message,
         );
       },
+    );
+  }
+
+  void setAIImage(String imageUrl) {
+    state = state.copyWith(
+      ai_image_url: imageUrl,
     );
   }
 

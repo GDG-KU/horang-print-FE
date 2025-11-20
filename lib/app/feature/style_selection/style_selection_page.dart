@@ -48,7 +48,7 @@ class StyleSelectionPage extends ConsumerWidget {
                               .read(styleSelectionProvider.notifier)
                               .loadStyles();
                         },
-                        icon: const Icon(Icons.refresh),
+                        leading: const Icon(Icons.refresh),
                         child: Text(
                           '재시도',
                           style: context.textTheme.large.copyWith(

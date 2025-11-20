@@ -29,46 +29,31 @@ class PrintOutputPage extends ConsumerWidget {
           if (state.capturedImage != null)
             Padding(
               padding: const EdgeInsets.all(24.0),
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.all(24.0),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: context.colorScheme.border,
-                        width: 1,
+              child: Scrollbar(
+                thumbVisibility: true,
+                trackVisibility: true,
+                radius: const Radius.circular(8),
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(24.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: context.colorScheme.border,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    child: Image.memory(
-                      width: 400,
-                      state.capturedImage!,
+                      child: Image.memory(
+                        width: 400,
+                        state.capturedImage!,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          Positioned(
-            top: 8,
-            left: 12,
-            child: SafeArea(
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new),
-                    onPressed: () {
-                      context.go(Routes.finalConfirmation);
-                    },
-                  ),
-                  Text(
-                    '인쇄 설정',
-                    style: context.textTheme.h3,
-                  ),
-                ],
-              ),
-            ),
-          ),
           Positioned(
             top: 0,
             right: 24,

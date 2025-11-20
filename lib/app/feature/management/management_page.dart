@@ -56,7 +56,7 @@ class ManagementPage extends ConsumerWidget {
                         },
                         enabled: !ref.watch(printerProvider).isConnected,
                         size: ShadButtonSize.lg,
-                        icon: const Icon(Icons.usb),
+                        leading: const Icon(Icons.usb),
                         child: Text(
                           '프린터 연결',
                           style: context.textTheme.large.copyWith(
@@ -70,7 +70,7 @@ class ManagementPage extends ConsumerWidget {
                           ref.read(printerProvider.notifier).disconnect();
                         },
                         size: ShadButtonSize.lg,
-                        icon: const Icon(Icons.usb_off),
+                        leading: const Icon(Icons.usb_off),
                         enabled: ref.watch(printerProvider).isConnected,
                         child: Text(
                           '프린터 연결 해제',

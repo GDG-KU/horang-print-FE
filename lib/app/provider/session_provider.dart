@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horang_print/app/api/api_service.dart';
+import 'package:horang_print/app/api/sse_event.dart';
 import 'package:horang_print/app/feature/final_confirm/logic/final_confirm_provider.dart';
 import 'package:horang_print/app/model/session_event.dart';
 import 'package:horang_print/app/model/session_state.dart';
@@ -13,6 +15,8 @@ final sessionProvider = NotifierProvider<SessionNotifier, SessionState>(
 );
 
 class SessionNotifier extends Notifier<SessionState> {
+  CancelToken? _sessionEventCancelToken;
+
   @override
   SessionState build() {
     return SessionState();
@@ -35,59 +39,63 @@ class SessionNotifier extends Notifier<SessionState> {
   }
 
   void _registerEventStream(String sessionUuid) async {
-    final res = await ApiService.I.registerSessionEventStream(sessionUuid);
+    final res = await ApiService.I.registerSessionEventStream(
+      sessionUuid,
+      _sessionEventCancelToken ??= CancelToken(),
+    );
     res.fold(onSuccess: (stream) {
       stream.listen((event) {
-        try {
-          final data = jsonDecode(event);
-          if (data.containsKey("status")) {
-            _handleSessionEvent(data);
-          }
-        } catch (e) {
-          log('JSON Decode Error: $e');
-          return;
-        }
+        _handleSessionEvent(event);
       });
-      // stream.listen((event) {
-      //   state = state.copyWith(
-      //     status: event.status,
-      //     aiImageUrl: event.aiImageUrl ?? state.aiImageUrl,
-      //   );
-      // });
     }, onFailure: (error) {
       RouterService.I.showToast(
         "세션 이벤트 스트림 연결 실패",
         description: error.message,
       );
+      _sessionEventCancelToken = null;
     });
   }
 
-  void _handleSessionEvent(dynamic json) {
-    log('Event Data: $json');
-    final type = SessionEvent.values.firstWhere(
-      (e) => e == json['status'],
+  void _handleSessionEvent(SseEvent event) {
+    log('SSE Event Received: $event');
+    final data = jsonDecode(event.data);
+    final eventType = SessionEvent.values.firstWhere(
+      (e) => e.name == data["status"],
       orElse: () => SessionEvent.FAILED,
     );
 
-    switch (type) {
-      case SessionEvent.AI_REQUESTED:
-        break;
-      case SessionEvent.RUNNING:
-        state = state.copyWith(
-          progress: json['progress_percent'] / 100 ?? state.progress,
-        );
-        break;
+    switch (eventType) {
       case SessionEvent.SUCCEEDED:
         ref
             .read(finalConfirmProvider.notifier)
-            .setAIImage(json['ai_image_url']);
+            .setAIImageUrl(data["ai_image_url"] as String);
         break;
       case SessionEvent.FAILED:
-        state = state.copyWith(
+        _endSession(
+          "Image generation failed",
           isError: true,
-          isDone: true,
+        );
+        RouterService.I.showToast(
+          "이미지 생성 실패",
+          description: "이미지 생성 중 오류가 발생했습니다.",
         );
         break;
+      case _:
     }
+
+    if (event.event == "completed") {
+      _endSession("Session completed");
+      return;
+    }
+  }
+
+  void _endSession(String reason, {bool isError = false}) {
+    state = state.copyWith(
+      isDone: true,
+      isError: isError,
+    );
+    _sessionEventCancelToken?.cancel(reason);
+    _sessionEventCancelToken = null;
+    return;
   }
 }

@@ -22,6 +22,14 @@ class StartPage extends ConsumerWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Image.asset(
+                'assets/logo_long.png',
+                width: 200,
+              ),
+            ),
             Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(

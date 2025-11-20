@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:horang_print/app/api/api_service.dart';
 import 'package:horang_print/app/feature/print_output/logic/print_output_state.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
@@ -14,10 +16,25 @@ final printOutputProvider =
   return PrintOutputNotifier();
 });
 
+Future<Uint8List> _processImage(
+  Uint8List imageBytes,
+) async {
+  Image decoded = decodeImage(imageBytes)!;
+  Image forPrint = grayscale(decoded);
+  forPrint = copyResize(forPrint, width: 576);
+  forPrint = ditherImage(
+    forPrint,
+    quantizer: NeuralQuantizer(forPrint, numberOfColors: 2),
+  );
+
+  return encodeBmp(forPrint);
+}
+
 class PrintOutputNotifier extends StateNotifier<PrintOutputState> {
   PrintOutputNotifier() : super(const PrintOutputState());
 
   final GlobalKey renderTargetKey = GlobalKey();
+  final GlobalKey previewTargetKey = GlobalKey();
 
   void increaseQuantity() {
     if (state.printQuantity < state.maxQuantity) {
@@ -50,32 +67,61 @@ class PrintOutputNotifier extends StateNotifier<PrintOutputState> {
     state = const PrintOutputState();
   }
 
-  Future<void> captureRenderTarget() async {
+  void uploadReceiptImage(String sessionUuid) {
+    ApiService.I.uploadReceiptImage(
+      state.originalImage!,
+      sessionUuid,
+    );
+  }
+
+  Future<bool> captureRenderTarget() async {
+    state = state.copyWith(isCapturing: true);
+    await Future.delayed(const Duration(milliseconds: 1000));
     try {
       if (renderTargetKey.currentContext == null) {
         log('Render target context is null');
-        return;
+        return false;
       }
-      RenderRepaintBoundary boundary = renderTargetKey.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
-      ui.Image renderedImage = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData = await getBytesFromKey(renderTargetKey);
+      ByteData? originalByteData = await getBytesFromKey(previewTargetKey);
+      if (byteData == null || originalByteData == null) {
+        log('Failed to get byte data from render target');
+        return false;
+      }
 
-      ByteData? byteData = await renderedImage.toByteData(
-        format: ui.ImageByteFormat.png,
+      final (origninal, bmpData) = (
+        originalByteData.buffer.asUint8List(),
+        await compute(
+          _processImage,
+          byteData.buffer.asUint8List(),
+        )
       );
 
-      Image image = decodeImage(byteData!.buffer.asUint8List())!;
-      image = grayscale(image);
-
-      image = copyResize(image, width: 576);
-      image = ditherImage(
-        image,
-        quantizer: NeuralQuantizer(image, numberOfColors: 2),
+      state = state.copyWith(
+        originalImage: origninal,
+        capturedImage: bmpData,
       );
-      Uint8List bmpData = encodeBmp(image);
-      state = state.copyWith(capturedImage: bmpData);
+      return true;
     } catch (e) {
       log('Error capturing render target: $e');
+      return false;
+    } finally {
+      state = state.copyWith(isCapturing: false);
     }
+  }
+
+  Future<ByteData?> getBytesFromKey(GlobalKey key) async {
+    if (key.currentContext == null) {
+      log('Target context is null');
+      return null;
+    }
+    RenderRepaintBoundary boundary =
+        key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    ui.Image renderedImage = await boundary.toImage(pixelRatio: 3.0);
+
+    ByteData? byteData = await renderedImage.toByteData(
+      format: ui.ImageByteFormat.png,
+    );
+    return byteData;
   }
 }

@@ -12,6 +12,8 @@ class PrintOutputState with _$PrintOutputState {
     @Default(8) int maxQuantity,
     @Default(false) bool isPrinting,
     @Default(false) bool isErrorOnPrinting,
+    @Default(false) bool isCapturing,
     Uint8List? capturedImage,
+    Uint8List? originalImage,
   }) = _PrintOutputState;
 }

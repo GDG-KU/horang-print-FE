@@ -41,7 +41,7 @@ class FinalConfirmNotifier extends Notifier<FinalConfirmState> {
     );
   }
 
-  void setAIImage(String imageUrl) {
+  void setAIImageUrl(String imageUrl) {
     state = state.copyWith(
       ai_image_url: imageUrl,
     );

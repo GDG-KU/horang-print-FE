@@ -100,7 +100,7 @@ class _PhotoTakingPageState extends ConsumerState<PhotoTakingPage> {
                     children: [
                       ShadButton.ghost(
                         foregroundColor: Colors.white,
-                        icon: const Icon(
+                        leading: const Icon(
                           Icons.arrow_back_ios_new,
                         ),
                         onPressed: () {

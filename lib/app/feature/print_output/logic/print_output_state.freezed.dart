@@ -21,7 +21,9 @@ mixin _$PrintOutputState {
   int get maxQuantity => throw _privateConstructorUsedError;
   bool get isPrinting => throw _privateConstructorUsedError;
   bool get isErrorOnPrinting => throw _privateConstructorUsedError;
+  bool get isCapturing => throw _privateConstructorUsedError;
   Uint8List? get capturedImage => throw _privateConstructorUsedError;
+  Uint8List? get originalImage => throw _privateConstructorUsedError;
 
   /// Create a copy of PrintOutputState
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +44,9 @@ abstract class $PrintOutputStateCopyWith<$Res> {
       int maxQuantity,
       bool isPrinting,
       bool isErrorOnPrinting,
-      Uint8List? capturedImage});
+      bool isCapturing,
+      Uint8List? capturedImage,
+      Uint8List? originalImage});
 }
 
 /// @nodoc
@@ -65,7 +69,9 @@ class _$PrintOutputStateCopyWithImpl<$Res, $Val extends PrintOutputState>
     Object? maxQuantity = null,
     Object? isPrinting = null,
     Object? isErrorOnPrinting = null,
+    Object? isCapturing = null,
     Object? capturedImage = freezed,
+    Object? originalImage = freezed,
   }) {
     return _then(_value.copyWith(
       printQuantity: null == printQuantity
@@ -88,9 +94,17 @@ class _$PrintOutputStateCopyWithImpl<$Res, $Val extends PrintOutputState>
           ? _value.isErrorOnPrinting
           : isErrorOnPrinting // ignore: cast_nullable_to_non_nullable
               as bool,
+      isCapturing: null == isCapturing
+          ? _value.isCapturing
+          : isCapturing // ignore: cast_nullable_to_non_nullable
+              as bool,
       capturedImage: freezed == capturedImage
           ? _value.capturedImage
           : capturedImage // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      originalImage: freezed == originalImage
+          ? _value.originalImage
+          : originalImage // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
     ) as $Val);
   }
@@ -110,7 +124,9 @@ abstract class _$$PrintOutputStateImplCopyWith<$Res>
       int maxQuantity,
       bool isPrinting,
       bool isErrorOnPrinting,
-      Uint8List? capturedImage});
+      bool isCapturing,
+      Uint8List? capturedImage,
+      Uint8List? originalImage});
 }
 
 /// @nodoc
@@ -131,7 +147,9 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
     Object? maxQuantity = null,
     Object? isPrinting = null,
     Object? isErrorOnPrinting = null,
+    Object? isCapturing = null,
     Object? capturedImage = freezed,
+    Object? originalImage = freezed,
   }) {
     return _then(_$PrintOutputStateImpl(
       printQuantity: null == printQuantity
@@ -154,9 +172,17 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
           ? _value.isErrorOnPrinting
           : isErrorOnPrinting // ignore: cast_nullable_to_non_nullable
               as bool,
+      isCapturing: null == isCapturing
+          ? _value.isCapturing
+          : isCapturing // ignore: cast_nullable_to_non_nullable
+              as bool,
       capturedImage: freezed == capturedImage
           ? _value.capturedImage
           : capturedImage // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      originalImage: freezed == originalImage
+          ? _value.originalImage
+          : originalImage // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
     ));
   }
@@ -171,7 +197,9 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
       this.maxQuantity = 8,
       this.isPrinting = false,
       this.isErrorOnPrinting = false,
-      this.capturedImage});
+      this.isCapturing = false,
+      this.capturedImage,
+      this.originalImage});
 
   @override
   @JsonKey()
@@ -189,11 +217,16 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
   @JsonKey()
   final bool isErrorOnPrinting;
   @override
+  @JsonKey()
+  final bool isCapturing;
+  @override
   final Uint8List? capturedImage;
+  @override
+  final Uint8List? originalImage;
 
   @override
   String toString() {
-    return 'PrintOutputState(printQuantity: $printQuantity, minQuantity: $minQuantity, maxQuantity: $maxQuantity, isPrinting: $isPrinting, isErrorOnPrinting: $isErrorOnPrinting, capturedImage: $capturedImage)';
+    return 'PrintOutputState(printQuantity: $printQuantity, minQuantity: $minQuantity, maxQuantity: $maxQuantity, isPrinting: $isPrinting, isErrorOnPrinting: $isErrorOnPrinting, isCapturing: $isCapturing, capturedImage: $capturedImage, originalImage: $originalImage)';
   }
 
   @override
@@ -211,8 +244,12 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
                 other.isPrinting == isPrinting) &&
             (identical(other.isErrorOnPrinting, isErrorOnPrinting) ||
                 other.isErrorOnPrinting == isErrorOnPrinting) &&
+            (identical(other.isCapturing, isCapturing) ||
+                other.isCapturing == isCapturing) &&
             const DeepCollectionEquality()
-                .equals(other.capturedImage, capturedImage));
+                .equals(other.capturedImage, capturedImage) &&
+            const DeepCollectionEquality()
+                .equals(other.originalImage, originalImage));
   }
 
   @override
@@ -223,7 +260,9 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
       maxQuantity,
       isPrinting,
       isErrorOnPrinting,
-      const DeepCollectionEquality().hash(capturedImage));
+      isCapturing,
+      const DeepCollectionEquality().hash(capturedImage),
+      const DeepCollectionEquality().hash(originalImage));
 
   /// Create a copy of PrintOutputState
   /// with the given fields replaced by the non-null parameter values.
@@ -242,7 +281,9 @@ abstract class _PrintOutputState implements PrintOutputState {
       final int maxQuantity,
       final bool isPrinting,
       final bool isErrorOnPrinting,
-      final Uint8List? capturedImage}) = _$PrintOutputStateImpl;
+      final bool isCapturing,
+      final Uint8List? capturedImage,
+      final Uint8List? originalImage}) = _$PrintOutputStateImpl;
 
   @override
   int get printQuantity;
@@ -255,7 +296,11 @@ abstract class _PrintOutputState implements PrintOutputState {
   @override
   bool get isErrorOnPrinting;
   @override
+  bool get isCapturing;
+  @override
   Uint8List? get capturedImage;
+  @override
+  Uint8List? get originalImage;
 
   /// Create a copy of PrintOutputState
   /// with the given fields replaced by the non-null parameter values.

@@ -7,6 +7,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:horang_print/app/api/api_error.dart';
 import 'package:horang_print/app/api/result.dart';
+import 'package:horang_print/app/api/sse_event.dart';
+import 'package:horang_print/app/api/sse_transformer.dart';
 
 class MyDio {
   final Dio dio;
@@ -36,6 +38,7 @@ class MyDio {
     void Function(int, int)? onReceiveProgress,
     Options? options,
     bool isEventStream = false,
+    CancelToken? cancelToken,
   }) async {
     try {
       final response = await dio.request(
@@ -45,12 +48,14 @@ class MyDio {
         options: options ?? Options(method: method),
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
+        cancelToken: cancelToken,
       );
       if (isEventStream) {
         return Result.success(response.data.stream
             .transform(unit8Transformer)
             .transform(const Utf8Decoder())
-            .transform(const LineSplitter()));
+            .transform(const LineSplitter())
+            .transform(SseTransformer()));
       }
       if (fromJson != null) {
         return Result.success(fromJson(response.data));
@@ -58,6 +63,9 @@ class MyDio {
         return Result.success(response.data as T);
       }
     } on DioException catch (e) {
+      if (CancelToken.isCancel(e)) {
+        return Result.requestCancelled();
+      }
       return Result.failure(ApiError.fromDioError(e));
     } catch (e) {
       return Result.failure(ApiError.unknown(e));
@@ -79,11 +87,12 @@ class MyDio {
     );
   }
 
-  Future<Result<T>> getEventStream<T>(
+  Future<Result<Stream<SseEvent>>> getEventStream<T>(
     String path, {
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
-    return _request<T>(
+    return _request(
       path: path,
       method: 'GET',
       queryParameters: queryParameters,
@@ -93,6 +102,7 @@ class MyDio {
         method: 'GET',
       ),
       isEventStream: true,
+      cancelToken: cancelToken,
     );
   }
 

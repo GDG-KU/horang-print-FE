@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:horang_print/app/api/dio_client.dart';
 import 'package:horang_print/app/api/result.dart';
 import 'package:get_it/get_it.dart';
+import 'package:horang_print/app/api/sse_event.dart';
 import 'package:horang_print/app/model/ai_style.dart';
 import 'package:horang_print/app/model/session_state.dart';
 
@@ -41,6 +42,27 @@ class ApiService {
     return _dio.post('/image/upload', data: formData);
   }
 
-  Future<Result<dynamic>> registerSessionEventStream(String sessionUuid) =>
-      _dio.getEventStream('/session/$sessionUuid/events');
+  Future<Result<Stream<SseEvent>>> registerSessionEventStream(
+    String sessionUuid,
+    CancelToken cancelToken,
+  ) =>
+      _dio.getEventStream(
+        '/session/$sessionUuid/events',
+        cancelToken: cancelToken,
+      );
+
+  Future<Result<void>> uploadReceiptImage(
+    List<int> imageBytes,
+    String sessionUuid,
+  ) async {
+    final formData = FormData.fromMap({
+      'edited_image': MultipartFile.fromBytes(
+        imageBytes,
+        filename: 'receipt_image.png',
+      ),
+      'session_uuid': sessionUuid,
+    });
+
+    return _dio.post('/image/finalize', data: formData);
+  }
 }

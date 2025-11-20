@@ -17,6 +17,13 @@ class Result<S> {
     return Result._(success: null, error: error, isSuccess: false);
   }
 
+  factory Result.requestCancelled() {
+    return Result._(
+      success: null,
+      isSuccess: false,
+    );
+  }
+
   S get data {
     if (!isSuccess) throw Exception("Cannot get data from error result");
     return _success!;

@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Image;
@@ -25,6 +24,7 @@ Future<Uint8List> _processImage(
   forPrint = ditherImage(
     forPrint,
     quantizer: NeuralQuantizer(forPrint, numberOfColors: 2),
+    kernel: DitherKernel.stucki,
   );
 
   return encodeBmp(forPrint);
@@ -56,7 +56,7 @@ class PrintOutputNotifier extends StateNotifier<PrintOutputState> {
           await ref
               .read(printerProvider.notifier)
               .printImage(state.capturedImage!);
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 6));
       log('Printing copy ${i + 1} of ${state.printQuantity}');
     }
 

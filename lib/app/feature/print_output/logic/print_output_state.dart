@@ -8,7 +8,7 @@ part 'print_output_state.freezed.dart';
 class PrintOutputState with _$PrintOutputState {
   const factory PrintOutputState({
     @Default(1) int printQuantity,
-    @Default(1) int minQuantity,
+    @Default(0) int minQuantity,
     @Default(8) int maxQuantity,
     @Default(false) bool isPrinting,
     @Default(false) bool isErrorOnPrinting,

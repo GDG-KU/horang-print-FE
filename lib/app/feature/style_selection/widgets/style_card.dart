@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:horang_print/app/extension/build_context_x.dart';
 import 'package:horang_print/app/model/ai_style.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 class StyleCard extends StatelessWidget {
   final AiStyle style;

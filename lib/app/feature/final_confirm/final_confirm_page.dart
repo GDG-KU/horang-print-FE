@@ -182,7 +182,7 @@ class FinalConfirmPage extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: ShadButton(
-                  // enabled: sessionState.isDone, TODO
+                  enabled: sessionState.isDone,
                   onPressed: () async {
                     final result = await ref
                         .read(printOutputProvider.notifier)

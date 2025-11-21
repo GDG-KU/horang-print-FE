@@ -26,7 +26,7 @@ class StartPage extends ConsumerWidget {
               bottom: 0,
               right: 0,
               child: Image.asset(
-                'assets/logo_long.png',
+                'assets/logo/logo_long.png',
                 width: 200,
               ),
             ),

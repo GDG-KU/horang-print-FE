@@ -1,16 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:horang_print/app/feature/management/logic/management_provider.dart';
 import 'package:horang_print/app/model/session_history.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-class ManagementSessionHistoryDetail extends StatelessWidget {
+class ManagementSessionHistoryDetail extends ConsumerWidget {
   const ManagementSessionHistoryDetail(
       {super.key, required this.sessionHistory});
 
   final SessionHistory sessionHistory;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ShadDialog(
       title: const Text('세션 상세 정보'),
       description: Column(
@@ -38,7 +40,9 @@ class ManagementSessionHistoryDetail extends StatelessWidget {
       ),
       actions: [
         ShadButton(
-          onPressed: () {},
+          onPressed: () {
+            ref.read(managementProvider.notifier).reprint(sessionHistory);
+          },
           child: const Text('재출력'),
         ),
       ],

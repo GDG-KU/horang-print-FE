@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
+import 'package:horang_print/app/api/api_error.dart';
 import 'package:horang_print/app/api/dio_client.dart';
 import 'package:horang_print/app/api/result.dart';
 import 'package:get_it/get_it.dart';
@@ -73,4 +76,22 @@ class ApiService {
             .map<SessionHistory>((e) => SessionHistory.fromJson(e))
             .toList(),
       );
+
+  Future<Result<Uint8List>> fetchImageAsBytes(String imageUrl) async {
+    try {
+      final response = await Dio().get<List<int>>(
+        imageUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+      if (response.statusCode == 200 && response.data != null) {
+        return Result.success(Uint8List.fromList(response.data!));
+      } else {
+        return Result.failure(ApiError.unknown(
+          'Failed to fetch image: ${response.statusCode}',
+        ));
+      }
+    } catch (e) {
+      return Result.failure(ApiError.unknown('Failed to fetch image: $e'));
+    }
+  }
 }

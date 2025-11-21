@@ -31,6 +31,11 @@ class ApiError {
     );
   }
 
+  @override
+  String toString() {
+    return 'ApiError{type: $type, message: $message, statusCode: $statusCode, rawError: $rawError}';
+  }
+
   factory ApiError.fromDioError(DioException error) {
     final statusCode = error.response?.statusCode;
 

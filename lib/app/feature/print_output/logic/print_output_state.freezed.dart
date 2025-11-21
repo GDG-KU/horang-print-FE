@@ -193,7 +193,7 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
 class _$PrintOutputStateImpl implements _PrintOutputState {
   const _$PrintOutputStateImpl(
       {this.printQuantity = 1,
-      this.minQuantity = 1,
+      this.minQuantity = 0,
       this.maxQuantity = 8,
       this.isPrinting = false,
       this.isErrorOnPrinting = false,

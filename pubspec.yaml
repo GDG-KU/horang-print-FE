@@ -31,6 +31,7 @@ dependencies:
   pretty_qr_code: ^3.5.0
   google_fonts: ^6.3.0
   cached_network_image: ^3.4.1
+  flutter_staggered_animations: ^1.1.1
 
   flutter_sewoo_usb_printer:
     path: ./packages/flutter_sewoo_usb_printer

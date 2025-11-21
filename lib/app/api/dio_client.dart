@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:horang_print/app/api/api_error.dart';
@@ -45,11 +47,20 @@ class MyDio {
         path,
         data: data,
         queryParameters: queryParameters,
-        options: options ?? Options(method: method),
+        options: options ??
+            Options(
+              method: method,
+              headers: {
+                "Accept-Encoding": "*",
+                "User-Agent":
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+              },
+            ),
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
         cancelToken: cancelToken,
       );
+
       if (isEventStream) {
         return Result.success(response.data.stream
             .transform(unit8Transformer)

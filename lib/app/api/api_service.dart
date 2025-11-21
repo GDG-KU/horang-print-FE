@@ -4,6 +4,7 @@ import 'package:horang_print/app/api/result.dart';
 import 'package:get_it/get_it.dart';
 import 'package:horang_print/app/api/sse_event.dart';
 import 'package:horang_print/app/model/ai_style.dart';
+import 'package:horang_print/app/model/session_history.dart';
 import 'package:horang_print/app/model/session_state.dart';
 
 class ApiService {
@@ -65,4 +66,11 @@ class ApiService {
 
     return _dio.post('/image/finalize', data: formData);
   }
+
+  Future<Result<List<SessionHistory>>> getSessionHistories() => _dio.get(
+        '/sessions',
+        fromJson: (json) => (json as List)
+            .map<SessionHistory>((e) => SessionHistory.fromJson(e))
+            .toList(),
+      );
 }

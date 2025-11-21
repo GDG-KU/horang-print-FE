@@ -18,8 +18,8 @@ class MyDio {
 
   MyDio({required this.dio}) {
     dio.options.baseUrl = _host;
-    dio.options.connectTimeout = const Duration(milliseconds: 10000);
-    dio.options.receiveTimeout = const Duration(milliseconds: 10000);
+    dio.options.connectTimeout = const Duration(milliseconds: 30000);
+    dio.options.receiveTimeout = const Duration(milliseconds: 30000);
     dio.interceptors.add(LogInterceptor(responseBody: true));
   }
 

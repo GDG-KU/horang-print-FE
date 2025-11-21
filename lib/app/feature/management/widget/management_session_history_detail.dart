@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horang_print/app/feature/management/logic/management_provider.dart';
 import 'package:horang_print/app/model/session_history.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class ManagementSessionHistoryDetail extends ConsumerWidget {
@@ -40,6 +41,13 @@ class ManagementSessionHistoryDetail extends ConsumerWidget {
       ),
       actions: [
         ShadButton(
+          enabled: !ref.watch(managementProvider).isPrinting,
+          leading: ref.watch(managementProvider).isPrinting
+              ? LoadingAnimationWidget.staggeredDotsWave(
+                  color: Colors.white,
+                  size: 16,
+                )
+              : null,
           onPressed: () {
             ref.read(managementProvider.notifier).reprint(sessionHistory);
           },

@@ -6,6 +6,7 @@ part 'printer_state.g.dart';
 @freezed
 class PrinterState with _$PrinterState {
   factory PrinterState({
+    @Default(false) bool isInitialized,
     @Default(false) bool isConnected,
   }) = _PrinterState;
 

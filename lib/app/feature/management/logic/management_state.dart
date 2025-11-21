@@ -8,6 +8,7 @@ part 'management_state.g.dart';
 class ManagementState with _$ManagementState {
   factory ManagementState({
     required List<SessionHistory> sessionHistories,
+    @Default(false) bool isPrinting,
   }) = _ManagementState;
 
   factory ManagementState.fromJson(Map<String, dynamic> json) =>

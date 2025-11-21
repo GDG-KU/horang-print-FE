@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -78,12 +79,14 @@ class ApiService {
       );
 
   Future<Result<Uint8List>> fetchImageAsBytes(String imageUrl) async {
+    log("Fetching image from URL: $imageUrl");
     try {
       final response = await Dio().get<List<int>>(
         imageUrl,
         options: Options(responseType: ResponseType.bytes),
       );
       if (response.statusCode == 200 && response.data != null) {
+        log(response.data!.length.toString());
         return Result.success(Uint8List.fromList(response.data!));
       } else {
         return Result.failure(ApiError.unknown(

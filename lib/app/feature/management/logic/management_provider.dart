@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horang_print/app/api/api_service.dart';
 import 'package:horang_print/app/feature/management/logic/management_state.dart';
+import 'package:horang_print/app/feature/print_output/logic/print_output_provider.dart';
 import 'package:horang_print/app/model/session_history.dart';
 import 'package:horang_print/app/provider/printer_provider.dart';
 
@@ -34,27 +35,46 @@ class ManagementNotifier extends Notifier<ManagementState> {
   }
 
   void reprint(SessionHistory history) async {
+    if (state.isPrinting) return;
+    state = state.copyWith(isPrinting: true);
     if (history.qr.target_url.isEmpty) {
       log("No image URL found for session history: ${history.uuid}");
       return;
     }
     final image = history.qr.target_url;
     if (_imageCache.containsKey(image)) {
-      final cachedImage = _imageCache[image]!;
-
+      final cachedImage = await processImage(
+        _imageCache[image]!,
+        needCrop: true,
+        brightnessFactor: ref.read(printOutputProvider).brightnessFactor,
+        contrastFactor: ref.read(printOutputProvider).contrastFactor,
+      );
       await ref.read(printerProvider.notifier).printImage(cachedImage);
+
+      state = state.copyWith(isPrinting: false);
       return;
     } else {
       final res = await ApiService.I.fetchImageAsBytes(image);
       res.fold(
         onSuccess: (imageBytes) async {
+          // _imageCache[image] = await processImage(imageBytes, needCrop: true);
+          // await ref.read(printerProvider.notifier).printImage(
+          //       _imageCache[image]!,
+          //     );
           _imageCache[image] = imageBytes;
-          await ref.read(printerProvider.notifier).printImage(imageBytes);
+          final cachedImage = await processImage(
+            _imageCache[image]!,
+            needCrop: true,
+            brightnessFactor: ref.read(printOutputProvider).brightnessFactor,
+            contrastFactor: ref.read(printOutputProvider).contrastFactor,
+          );
+          await ref.read(printerProvider.notifier).printImage(cachedImage);
         },
         onFailure: (error) {
           log("Failed to fetch image for reprint: $error");
         },
       );
+      state = state.copyWith(isPrinting: false);
     }
   }
 }

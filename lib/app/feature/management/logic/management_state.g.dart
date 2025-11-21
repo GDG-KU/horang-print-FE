@@ -12,10 +12,12 @@ _$ManagementStateImpl _$$ManagementStateImplFromJson(
       sessionHistories: (json['sessionHistories'] as List<dynamic>)
           .map((e) => SessionHistory.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isPrinting: json['isPrinting'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$ManagementStateImplToJson(
         _$ManagementStateImpl instance) =>
     <String, dynamic>{
       'sessionHistories': instance.sessionHistories,
+      'isPrinting': instance.isPrinting,
     };

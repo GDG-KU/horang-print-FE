@@ -20,6 +20,7 @@ PrinterState _$PrinterStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PrinterState {
+  bool get isInitialized => throw _privateConstructorUsedError;
   bool get isConnected => throw _privateConstructorUsedError;
 
   /// Serializes this PrinterState to a JSON map.
@@ -38,7 +39,7 @@ abstract class $PrinterStateCopyWith<$Res> {
           PrinterState value, $Res Function(PrinterState) then) =
       _$PrinterStateCopyWithImpl<$Res, PrinterState>;
   @useResult
-  $Res call({bool isConnected});
+  $Res call({bool isInitialized, bool isConnected});
 }
 
 /// @nodoc
@@ -56,9 +57,14 @@ class _$PrinterStateCopyWithImpl<$Res, $Val extends PrinterState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isInitialized = null,
     Object? isConnected = null,
   }) {
     return _then(_value.copyWith(
+      isInitialized: null == isInitialized
+          ? _value.isInitialized
+          : isInitialized // ignore: cast_nullable_to_non_nullable
+              as bool,
       isConnected: null == isConnected
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
@@ -75,7 +81,7 @@ abstract class _$$PrinterStateImplCopyWith<$Res>
       __$$PrinterStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isConnected});
+  $Res call({bool isInitialized, bool isConnected});
 }
 
 /// @nodoc
@@ -91,9 +97,14 @@ class __$$PrinterStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isInitialized = null,
     Object? isConnected = null,
   }) {
     return _then(_$PrinterStateImpl(
+      isInitialized: null == isInitialized
+          ? _value.isInitialized
+          : isInitialized // ignore: cast_nullable_to_non_nullable
+              as bool,
       isConnected: null == isConnected
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
@@ -105,18 +116,21 @@ class __$$PrinterStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PrinterStateImpl implements _PrinterState {
-  _$PrinterStateImpl({this.isConnected = false});
+  _$PrinterStateImpl({this.isInitialized = false, this.isConnected = false});
 
   factory _$PrinterStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$PrinterStateImplFromJson(json);
 
   @override
   @JsonKey()
+  final bool isInitialized;
+  @override
+  @JsonKey()
   final bool isConnected;
 
   @override
   String toString() {
-    return 'PrinterState(isConnected: $isConnected)';
+    return 'PrinterState(isInitialized: $isInitialized, isConnected: $isConnected)';
   }
 
   @override
@@ -124,13 +138,15 @@ class _$PrinterStateImpl implements _PrinterState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PrinterStateImpl &&
+            (identical(other.isInitialized, isInitialized) ||
+                other.isInitialized == isInitialized) &&
             (identical(other.isConnected, isConnected) ||
                 other.isConnected == isConnected));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, isConnected);
+  int get hashCode => Object.hash(runtimeType, isInitialized, isConnected);
 
   /// Create a copy of PrinterState
   /// with the given fields replaced by the non-null parameter values.
@@ -149,11 +165,14 @@ class _$PrinterStateImpl implements _PrinterState {
 }
 
 abstract class _PrinterState implements PrinterState {
-  factory _PrinterState({final bool isConnected}) = _$PrinterStateImpl;
+  factory _PrinterState({final bool isInitialized, final bool isConnected}) =
+      _$PrinterStateImpl;
 
   factory _PrinterState.fromJson(Map<String, dynamic> json) =
       _$PrinterStateImpl.fromJson;
 
+  @override
+  bool get isInitialized;
   @override
   bool get isConnected;
 

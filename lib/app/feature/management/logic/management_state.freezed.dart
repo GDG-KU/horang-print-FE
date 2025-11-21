@@ -22,6 +22,7 @@ ManagementState _$ManagementStateFromJson(Map<String, dynamic> json) {
 mixin _$ManagementState {
   List<SessionHistory> get sessionHistories =>
       throw _privateConstructorUsedError;
+  bool get isPrinting => throw _privateConstructorUsedError;
 
   /// Serializes this ManagementState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $ManagementStateCopyWith<$Res> {
           ManagementState value, $Res Function(ManagementState) then) =
       _$ManagementStateCopyWithImpl<$Res, ManagementState>;
   @useResult
-  $Res call({List<SessionHistory> sessionHistories});
+  $Res call({List<SessionHistory> sessionHistories, bool isPrinting});
 }
 
 /// @nodoc
@@ -58,12 +59,17 @@ class _$ManagementStateCopyWithImpl<$Res, $Val extends ManagementState>
   @override
   $Res call({
     Object? sessionHistories = null,
+    Object? isPrinting = null,
   }) {
     return _then(_value.copyWith(
       sessionHistories: null == sessionHistories
           ? _value.sessionHistories
           : sessionHistories // ignore: cast_nullable_to_non_nullable
               as List<SessionHistory>,
+      isPrinting: null == isPrinting
+          ? _value.isPrinting
+          : isPrinting // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -76,7 +82,7 @@ abstract class _$$ManagementStateImplCopyWith<$Res>
       __$$ManagementStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<SessionHistory> sessionHistories});
+  $Res call({List<SessionHistory> sessionHistories, bool isPrinting});
 }
 
 /// @nodoc
@@ -93,12 +99,17 @@ class __$$ManagementStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? sessionHistories = null,
+    Object? isPrinting = null,
   }) {
     return _then(_$ManagementStateImpl(
       sessionHistories: null == sessionHistories
           ? _value._sessionHistories
           : sessionHistories // ignore: cast_nullable_to_non_nullable
               as List<SessionHistory>,
+      isPrinting: null == isPrinting
+          ? _value.isPrinting
+          : isPrinting // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -106,7 +117,9 @@ class __$$ManagementStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ManagementStateImpl implements _ManagementState {
-  _$ManagementStateImpl({required final List<SessionHistory> sessionHistories})
+  _$ManagementStateImpl(
+      {required final List<SessionHistory> sessionHistories,
+      this.isPrinting = false})
       : _sessionHistories = sessionHistories;
 
   factory _$ManagementStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -122,8 +135,12 @@ class _$ManagementStateImpl implements _ManagementState {
   }
 
   @override
+  @JsonKey()
+  final bool isPrinting;
+
+  @override
   String toString() {
-    return 'ManagementState(sessionHistories: $sessionHistories)';
+    return 'ManagementState(sessionHistories: $sessionHistories, isPrinting: $isPrinting)';
   }
 
   @override
@@ -132,13 +149,15 @@ class _$ManagementStateImpl implements _ManagementState {
         (other.runtimeType == runtimeType &&
             other is _$ManagementStateImpl &&
             const DeepCollectionEquality()
-                .equals(other._sessionHistories, _sessionHistories));
+                .equals(other._sessionHistories, _sessionHistories) &&
+            (identical(other.isPrinting, isPrinting) ||
+                other.isPrinting == isPrinting));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_sessionHistories));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_sessionHistories), isPrinting);
 
   /// Create a copy of ManagementState
   /// with the given fields replaced by the non-null parameter values.
@@ -159,14 +178,16 @@ class _$ManagementStateImpl implements _ManagementState {
 
 abstract class _ManagementState implements ManagementState {
   factory _ManagementState(
-          {required final List<SessionHistory> sessionHistories}) =
-      _$ManagementStateImpl;
+      {required final List<SessionHistory> sessionHistories,
+      final bool isPrinting}) = _$ManagementStateImpl;
 
   factory _ManagementState.fromJson(Map<String, dynamic> json) =
       _$ManagementStateImpl.fromJson;
 
   @override
   List<SessionHistory> get sessionHistories;
+  @override
+  bool get isPrinting;
 
   /// Create a copy of ManagementState
   /// with the given fields replaced by the non-null parameter values.

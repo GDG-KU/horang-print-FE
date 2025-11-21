@@ -13,6 +13,8 @@ class PrintOutputState with _$PrintOutputState {
     @Default(false) bool isPrinting,
     @Default(false) bool isErrorOnPrinting,
     @Default(false) bool isCapturing,
+    @Default(1.25) double brightnessFactor,
+    @Default(1.05) double contrastFactor,
     Uint8List? capturedImage,
     Uint8List? originalImage,
   }) = _PrintOutputState;

@@ -22,6 +22,8 @@ mixin _$PrintOutputState {
   bool get isPrinting => throw _privateConstructorUsedError;
   bool get isErrorOnPrinting => throw _privateConstructorUsedError;
   bool get isCapturing => throw _privateConstructorUsedError;
+  double get brightnessFactor => throw _privateConstructorUsedError;
+  double get contrastFactor => throw _privateConstructorUsedError;
   Uint8List? get capturedImage => throw _privateConstructorUsedError;
   Uint8List? get originalImage => throw _privateConstructorUsedError;
 
@@ -45,6 +47,8 @@ abstract class $PrintOutputStateCopyWith<$Res> {
       bool isPrinting,
       bool isErrorOnPrinting,
       bool isCapturing,
+      double brightnessFactor,
+      double contrastFactor,
       Uint8List? capturedImage,
       Uint8List? originalImage});
 }
@@ -70,6 +74,8 @@ class _$PrintOutputStateCopyWithImpl<$Res, $Val extends PrintOutputState>
     Object? isPrinting = null,
     Object? isErrorOnPrinting = null,
     Object? isCapturing = null,
+    Object? brightnessFactor = null,
+    Object? contrastFactor = null,
     Object? capturedImage = freezed,
     Object? originalImage = freezed,
   }) {
@@ -98,6 +104,14 @@ class _$PrintOutputStateCopyWithImpl<$Res, $Val extends PrintOutputState>
           ? _value.isCapturing
           : isCapturing // ignore: cast_nullable_to_non_nullable
               as bool,
+      brightnessFactor: null == brightnessFactor
+          ? _value.brightnessFactor
+          : brightnessFactor // ignore: cast_nullable_to_non_nullable
+              as double,
+      contrastFactor: null == contrastFactor
+          ? _value.contrastFactor
+          : contrastFactor // ignore: cast_nullable_to_non_nullable
+              as double,
       capturedImage: freezed == capturedImage
           ? _value.capturedImage
           : capturedImage // ignore: cast_nullable_to_non_nullable
@@ -125,6 +139,8 @@ abstract class _$$PrintOutputStateImplCopyWith<$Res>
       bool isPrinting,
       bool isErrorOnPrinting,
       bool isCapturing,
+      double brightnessFactor,
+      double contrastFactor,
       Uint8List? capturedImage,
       Uint8List? originalImage});
 }
@@ -148,6 +164,8 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
     Object? isPrinting = null,
     Object? isErrorOnPrinting = null,
     Object? isCapturing = null,
+    Object? brightnessFactor = null,
+    Object? contrastFactor = null,
     Object? capturedImage = freezed,
     Object? originalImage = freezed,
   }) {
@@ -176,6 +194,14 @@ class __$$PrintOutputStateImplCopyWithImpl<$Res>
           ? _value.isCapturing
           : isCapturing // ignore: cast_nullable_to_non_nullable
               as bool,
+      brightnessFactor: null == brightnessFactor
+          ? _value.brightnessFactor
+          : brightnessFactor // ignore: cast_nullable_to_non_nullable
+              as double,
+      contrastFactor: null == contrastFactor
+          ? _value.contrastFactor
+          : contrastFactor // ignore: cast_nullable_to_non_nullable
+              as double,
       capturedImage: freezed == capturedImage
           ? _value.capturedImage
           : capturedImage // ignore: cast_nullable_to_non_nullable
@@ -198,6 +224,8 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
       this.isPrinting = false,
       this.isErrorOnPrinting = false,
       this.isCapturing = false,
+      this.brightnessFactor = 1.25,
+      this.contrastFactor = 1.05,
       this.capturedImage,
       this.originalImage});
 
@@ -220,13 +248,19 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
   @JsonKey()
   final bool isCapturing;
   @override
+  @JsonKey()
+  final double brightnessFactor;
+  @override
+  @JsonKey()
+  final double contrastFactor;
+  @override
   final Uint8List? capturedImage;
   @override
   final Uint8List? originalImage;
 
   @override
   String toString() {
-    return 'PrintOutputState(printQuantity: $printQuantity, minQuantity: $minQuantity, maxQuantity: $maxQuantity, isPrinting: $isPrinting, isErrorOnPrinting: $isErrorOnPrinting, isCapturing: $isCapturing, capturedImage: $capturedImage, originalImage: $originalImage)';
+    return 'PrintOutputState(printQuantity: $printQuantity, minQuantity: $minQuantity, maxQuantity: $maxQuantity, isPrinting: $isPrinting, isErrorOnPrinting: $isErrorOnPrinting, isCapturing: $isCapturing, brightnessFactor: $brightnessFactor, contrastFactor: $contrastFactor, capturedImage: $capturedImage, originalImage: $originalImage)';
   }
 
   @override
@@ -246,6 +280,10 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
                 other.isErrorOnPrinting == isErrorOnPrinting) &&
             (identical(other.isCapturing, isCapturing) ||
                 other.isCapturing == isCapturing) &&
+            (identical(other.brightnessFactor, brightnessFactor) ||
+                other.brightnessFactor == brightnessFactor) &&
+            (identical(other.contrastFactor, contrastFactor) ||
+                other.contrastFactor == contrastFactor) &&
             const DeepCollectionEquality()
                 .equals(other.capturedImage, capturedImage) &&
             const DeepCollectionEquality()
@@ -261,6 +299,8 @@ class _$PrintOutputStateImpl implements _PrintOutputState {
       isPrinting,
       isErrorOnPrinting,
       isCapturing,
+      brightnessFactor,
+      contrastFactor,
       const DeepCollectionEquality().hash(capturedImage),
       const DeepCollectionEquality().hash(originalImage));
 
@@ -282,6 +322,8 @@ abstract class _PrintOutputState implements PrintOutputState {
       final bool isPrinting,
       final bool isErrorOnPrinting,
       final bool isCapturing,
+      final double brightnessFactor,
+      final double contrastFactor,
       final Uint8List? capturedImage,
       final Uint8List? originalImage}) = _$PrintOutputStateImpl;
 
@@ -297,6 +339,10 @@ abstract class _PrintOutputState implements PrintOutputState {
   bool get isErrorOnPrinting;
   @override
   bool get isCapturing;
+  @override
+  double get brightnessFactor;
+  @override
+  double get contrastFactor;
   @override
   Uint8List? get capturedImage;
   @override

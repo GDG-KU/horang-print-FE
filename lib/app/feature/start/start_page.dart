@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:horang_print/app/extension/build_context_x.dart';
+import 'package:horang_print/app/feature/start/widget/management_dialog.dart';
 import 'package:horang_print/app/feature/style_selection/logic/style_selection_provider.dart';
 import 'package:horang_print/app/routing/router_service.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 class StartPage extends ConsumerWidget {
   const StartPage({super.key});
@@ -22,14 +24,6 @@ class StartPage extends ConsumerWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Image.asset(
-                'assets/logo/logo_long.png',
-                width: 200,
-              ),
-            ),
             Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -41,6 +35,34 @@ class StartPage extends ConsumerWidget {
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
                   color: Colors.black.withOpacity(0.3),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 12,
+              right: 12,
+              child: GestureDetector(
+                onLongPress: () async {
+                  final res = await showShadDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ManagementDialog();
+                    },
+                  );
+                  if (res == true) {
+                    RouterService.I.router.go(Routes.management);
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Image.asset(
+                    'assets/logo/logo_long.png',
+                    width: 400,
+                  ),
                 ),
               ),
             ),

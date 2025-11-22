@@ -18,6 +18,12 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
 
   PhotoTakingNotifier() : super(const PhotoTakingState());
 
+  void setCompressedImage(Uint8List compressedBytes) {
+    state = state.copyWith(
+      capturedImage: compressedBytes,
+    );
+  }
+
   double calculateDottedBoxSize(BuildContext context) {
     return state.cameraController!.value.previewSize!.height *
         (context.width / state.cameraController!.value.previewSize!.width);
@@ -100,7 +106,13 @@ class PhotoTakingNotifier extends StateNotifier<PhotoTakingState> {
       final originalImage = img.decodeImage(imageBytes);
       if (originalImage == null) return;
       final flippedImage = img.flipHorizontal(originalImage);
-      final finalBytes = img.encodePng(flippedImage);
+      final cropped = img.copyResize(
+        flippedImage,
+        width: (originalImage.width * 0.5).round(),
+        height: (originalImage.height * 0.5).round(),
+        interpolation: img.Interpolation.linear,
+      );
+      final finalBytes = img.encodePng(cropped);
 
       state = state.copyWith(
         isCapturing: false,

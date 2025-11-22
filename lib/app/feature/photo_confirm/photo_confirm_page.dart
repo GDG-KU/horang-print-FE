@@ -77,6 +77,10 @@ class PhotoConfirmPage extends ConsumerWidget {
                   Expanded(
                     child: ShadButton(
                       onPressed: () async {
+                        // ref
+                        //     .read(finalConfirmProvider.notifier)
+                        //     .testCompress(photoState.capturedImage!);
+                        // return;
                         final result = RouterService.I.showConfirmDialog(
                           title: '이 사진으로 결정하시겠습니까?',
                           description: '다음 단계로 넘어가면 사진을 다시 찍을 수 없습니다.',

@@ -134,7 +134,14 @@ class PrintOutputNotifier extends StateNotifier<PrintOutputState> {
   }
 
   void reset() {
-    state = const PrintOutputState();
+    state = state.copyWith(
+      printQuantity: 1,
+      isPrinting: false,
+      isErrorOnPrinting: false,
+      isCapturing: false,
+      capturedImage: null,
+      originalImage: null,
+    );
   }
 
   void uploadReceiptImage(String sessionUuid) {

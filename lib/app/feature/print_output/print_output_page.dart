@@ -19,6 +19,7 @@ class PrintOutputPage extends ConsumerWidget {
       if (previous?.isPrinting == true &&
           next.isPrinting == false &&
           next.isErrorOnPrinting == false) {
+        ref.read(printOutputProvider.notifier).reset();
         context.go(Routes.completion);
       }
     });
